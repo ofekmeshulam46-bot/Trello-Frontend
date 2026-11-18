@@ -24,6 +24,7 @@ export function AppHeader() {
 				<NavLink to="/" className="logo">
 					E2E Demo
 				</NavLink>
+				<NavLink to="/task-test">Task</NavLink>
 				<NavLink to="about">About</NavLink>
 				<NavLink to="car">Cars</NavLink>
 				<NavLink to="chat">Chat</NavLink>

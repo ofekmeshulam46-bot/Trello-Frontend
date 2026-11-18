@@ -15,6 +15,7 @@ import { AppHeader } from './cmps/AppHeader'
 import { AppFooter } from './cmps/AppFooter'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup, Login, Signup } from './pages/LoginSignup.jsx'
+import { TaskTest } from './pages/TaskTest.jsx'
 
 
 export function RootCmp() {
@@ -25,6 +26,7 @@ export function RootCmp() {
 
             <main>
                 <Routes>
+                    <Route path="task-test" element={<TaskTest />}/>
                     <Route path="" element={<HomePage />} />
                     <Route path="about" element={<AboutUs />}>
                         <Route path="team" element={<AboutTeam />} />
