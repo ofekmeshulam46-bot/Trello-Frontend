@@ -1,8 +1,8 @@
 export function BoardPreview({ board }) {
   return (
     <article className="board-preview">
-      <p className="name">{board.name}</p>
-  
+      <div className="board-cover" />
+      <p className="board-name">{board.name}</p>
     </article>
   )
 }
