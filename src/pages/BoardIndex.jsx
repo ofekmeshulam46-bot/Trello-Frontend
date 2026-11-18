@@ -68,6 +68,65 @@ export function Boardindex() {
 
   return (
     <section className="board-index">
+      <aside className="board-sidebar">
+        <div className="sidebar-brand">
+          <span className="sidebar-app-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <rect x="6" y="6" width="4" height="12" rx="1" />
+              <rect x="14" y="6" width="4" height="8" rx="1" />
+            </svg>
+          </span>
+          <span className="sidebar-brand-name">Trello</span>
+          <button className="sidebar-switcher" type="button" aria-label="Open app switcher">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="6" cy="6" r="1" />
+              <circle cx="12" cy="6" r="1" />
+              <circle cx="18" cy="6" r="1" />
+              <circle cx="6" cy="12" r="1" />
+              <circle cx="12" cy="12" r="1" />
+              <circle cx="18" cy="12" r="1" />
+              <circle cx="6" cy="18" r="1" />
+              <circle cx="12" cy="18" r="1" />
+              <circle cx="18" cy="18" r="1" />
+            </svg>
+          </button>
+        </div>
+
+        <nav className="sidebar-nav" aria-label="Workspace navigation">
+          <button className="sidebar-nav-item active" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="M9 3v18M15 3v18" />
+            </svg>
+            <span>Boards</span>
+          </button>
+          <button className="sidebar-nav-item" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5" />
+            </svg>
+            <span>Templates</span>
+          </button>
+          <button className="sidebar-nav-item" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 12h4l2-5 4 10 2-5h6" />
+            </svg>
+            <span>Home</span>
+          </button>
+        </nav>
+
+        <div className="sidebar-workspaces">
+          <h4>Workspaces</h4>
+          <button className="sidebar-workspace" type="button">
+            <span className="sidebar-workspace-logo">T</span>
+            <span>Trello Workspace</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m7 9 5 5 5-5" />
+            </svg>
+          </button>
+        </div>
+      </aside>
+
       <main className="board-main">
         <h3 className="workspace-title">YOUR WORKSPACES</h3>
         <div className="workspace-header">
