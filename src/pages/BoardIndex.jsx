@@ -32,10 +32,10 @@ export function Boardindex() {
   //   setFilterBy(filterBy)
   // }
 
-  async function onRemoveBoard(boardId) {
+  async function onRemoveBoard(boardId, boardName) {
     try {
       await removeBoard(boardId)
-      showSuccessMsg(`Board "${boardId}" removed`)
+      showSuccessMsg(` removed "${boardName}" `)
     } catch (err) {
       console.log("Cannot remove board", err)
       showErrorMsg("Cannot remove board")
@@ -47,7 +47,7 @@ export function Boardindex() {
 
     try {
       await saveBoard(boardToSave)
-      showSuccessMsg(`Board added (id: ${boardToSave._id})`)
+      showSuccessMsg(`Board "${boardToSave.name}" was added `)
     } catch (err) {
       console.log("Cannot add board", err)
       showErrorMsg("Cannot add board")
@@ -55,11 +55,11 @@ export function Boardindex() {
   }
 
   async function onEditBoard(board) {
-    const price = +prompt("New price?")
-    const boardToSave = { ...board, price }
+    const name = prompt("New name?")
+    const boardToSave = { ...board, name }
     try {
       await saveBoard(boardToSave)
-      showSuccessMsg(`Board updated to price: $${boardToSave.price}`)
+      showSuccessMsg(`Board name updated to : ${boardToSave.name}`)
     } catch (err) {
       console.log("Cannot update board", err)
       showErrorMsg("Cannot update board")
@@ -79,6 +79,7 @@ export function Boardindex() {
         </div>
       </div>
       <main>
+        <button onClick={onAddBoard}>Add a Board</button>
         <BoardList
           boards={boards}
           onRemoveBoard={onRemoveBoard}

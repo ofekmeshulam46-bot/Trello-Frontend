@@ -1,45 +1,56 @@
-export const SET_BOARDS = 'SET_BOARDS'
-export const SET_BOARD = 'SET_BOARD'
-export const REMOVE_BOARD = 'REMOVE_BOARD'
-export const ADD_BOARD = 'ADD_BOARD'
-export const UPDATE_BOARD = 'UPDATE_BOARD'
-export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
+export const SET_BOARDS = "SET_BOARDS"
+export const SET_BOARD = "SET_BOARD"
+export const REMOVE_BOARD = "REMOVE_BOARD"
+export const ADD_BOARD = "ADD_BOARD"
+export const EDIT_BOARD = "EDIT_BOARD"
+export const ADD_BOARD_MSG = "ADD_BOARD_MSG"
 
 const initialState = {
-    boards: [],
-    board: null
+  boards: [],
+  board: null,
 }
 
 export function boardReducer(state = initialState, action) {
-    var newState = state
-    var boards
-    switch (action.type) {
-        case SET_BOARDS:
-            newState = { ...state, boards: action.boards }
-            break
-        case SET_BOARD:
-            newState = { ...state, board: action.board }
-            break
-        case REMOVE_BOARD:
-            const lastRemovedBoard = state.boards.find(board => board._id === action.boardId)
-            boards = state.boards.filter(board => board._id !== action.boardId)
-            newState = { ...state, boards, lastRemovedBoard }
-            break
-        case ADD_BOARD:
-            newState = { ...state, boards: [...state.boards, action.board] }
-            break
-        case UPDATE_BOARD:
-            boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
-            newState = { ...state, boards }
-            break
-        case ADD_BOARD_MSG:
-            if (action.msg && state.board) {
-                newState = { ...state, board: { ...state.board, msgs: [...state.board.msgs || [], action.msg] } }
-                break
-            }
-        default:
-    }
-    return newState
+  var newState = state
+  var boards
+  switch (action.type) {
+    case SET_BOARDS:
+      newState = { ...state, boards: action.boards }
+      break
+    case SET_BOARD:
+      newState = { ...state, board: action.board }
+      break
+    case REMOVE_BOARD:
+      const lastRemovedBoard = state.boards.find(
+        (board) => board._id === action.boardId,
+      )
+      boards = state.boards.filter((board) => board._id !== action.boardId)
+      newState = { ...state, boards, lastRemovedBoard }
+      break
+    case ADD_BOARD:
+        // board.name = prompt("Enter Board Name")
+      newState = { ...state, boards: [...state.boards, action.board] }
+      break
+    case EDIT_BOARD:
+      boards = state.boards.map((board) =>
+        board._id === action.board._id ? action.board : board,
+      )
+      newState = { ...state, boards }
+      break
+    case ADD_BOARD_MSG:
+      if (action.msg && state.board) {
+        newState = {
+          ...state,
+          board: {
+            ...state.board,
+            msgs: [...(state.board.msgs || []), action.msg],
+          },
+        }
+        break
+      }
+    default:
+  }
+  return newState
 }
 
 // unitTestReducer()
@@ -68,4 +79,3 @@ export function boardReducer(state = initialState, action) {
 //     state = boardReducer(state, { type: ADD_BOARD_MSG, boardId: board1._id, msg })
 //     console.log('After ADD_BOARD_MSG:', state)
 // }
-

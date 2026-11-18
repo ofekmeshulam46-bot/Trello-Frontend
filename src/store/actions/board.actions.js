@@ -2,10 +2,10 @@ import { boardService } from "../../services/board/board.service.js"
 import { store } from "../store"
 import {
   ADD_BOARD,
+  EDIT_BOARD,
   REMOVE_BOARD,
   SET_BOARDS,
   SET_BOARD,
-  UPDATE_BOARD,
   ADD_BOARD_MSG,
 } from "../reducers/board.reducer"
 

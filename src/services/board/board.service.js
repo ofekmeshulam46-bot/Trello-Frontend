@@ -83,6 +83,7 @@ function save(board) {
     return storageService.put(STORAGE_KEY, board)
   } else {
     // when switching to backend - remove the next line     <????
+    board.name = prompt("Enter Board Name")
     board.owner = userService.getLoggedinUser()
     return storageService.post(STORAGE_KEY, board)
   }
@@ -90,11 +91,10 @@ function save(board) {
 
 function getEmptyBoard() {
   return {
-    name: boardNames[getRandomIntInclusive(0, boardNames.length - 1)],
-    price: getRandomIntInclusive(1000, 9000),
+    // name: boardNames[getRandomIntInclusive(0, boardNames.length - 1)],
+    name: "",
     labels: labels[getRandomIntInclusive(0, labels.length - 1)],
     createdAt: Date.now(),
-    inStock: true,
   }
 }
 
@@ -104,6 +104,7 @@ function _createBoards() {
 
   for (var i = 0; i < 4; i++) {
     const board = _createBoard()
+    board.name = boardNames[getRandomIntInclusive(0, boardNames.length - 1)]
     boards.push(board)
   }
   saveToStorage(STORAGE_KEY, boards)
@@ -111,6 +112,7 @@ function _createBoards() {
 
 function _createBoard() {
   const board = getEmptyBoard()
+//   board.name = prompt("Enter Board Name")
   board._id = makeId()
   return board
 }
