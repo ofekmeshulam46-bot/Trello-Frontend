@@ -5,6 +5,7 @@ import {
     EDIT_BOARD,
     REMOVE_BOARD,
     SET_BOARDS,
+    SET_BOARD,
 } from '../reducers/board.reducer'
 
 export async function loadBoards(filterBy) {
@@ -13,6 +14,16 @@ export async function loadBoards(filterBy) {
         store.dispatch(getCmdSetBoards(boards))
     } catch (err) {
         console.log('Cannot load boards', err)
+        throw err
+    }
+}
+
+export async function loadBoard(boardId) {
+    try {
+        const board = await boardService.getById(boardId)
+        store.dispatch(getCmdSetBoard(board))
+    } catch(err) {
+        console.log('Cannot load board', err)
         throw err
     }
 }
@@ -43,6 +54,10 @@ export async function saveBoard(board) {
 
 function getCmdSetBoards(boards) {
     return { type: SET_BOARDS, boards }
+}
+
+function getCmdSetBoard(board) {
+    return { type: SET_BOARD, board}
 }
 
 function getCmdAddBoard(board) {

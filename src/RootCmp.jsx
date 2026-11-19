@@ -14,7 +14,8 @@ import { AppHeader } from "./cmps/AppHeader"
 import { AppFooter } from "./cmps/AppFooter"
 import { UserMsg } from "./cmps/UserMsg.jsx"
 import { LoginSignup, Login, Signup } from "./pages/LoginSignup.jsx"
-import { BoardIndex } from "./pages/BoardIndex.jsx"
+import { BoardIndex } from "./pages/Boardindex.jsx"
+import { BoardDetails } from "./pages/BoardDetails.jsx"
 
 export function RootCmp() {
   return (
@@ -24,6 +25,7 @@ export function RootCmp() {
 
       <main>
         <Routes>
+          <Route path="board/:boardId" element={<BoardDetails />}/>
           <Route path="boards" element={<BoardIndex />} />
           <Route path="" element={<HomePage />} />
           <Route path="about" element={<AboutUs />}>
