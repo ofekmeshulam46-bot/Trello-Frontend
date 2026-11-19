@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router"
+import { Routes, Route, useLocation } from "react-router"
 
 import { HomePage } from "./pages/HomePage"
 import { AboutUs, AboutTeam, AboutVision } from "./pages/AboutUs"
@@ -18,12 +18,15 @@ import { BoardIndex } from "./pages/Boardindex.jsx"
 import { BoardDetails } from "./pages/BoardDetails.jsx"
 
 export function RootCmp() {
+  const { pathname } = useLocation()
+  const isBoardPage = pathname.startsWith("/board/")
+
   return (
-    <div className="main-container">
-      <AppHeader />
+    <div className={`main-container${isBoardPage ? " board-page" : ""}`}>
+      {!isBoardPage && <AppHeader />}
       <UserMsg />
 
-      <main>
+      <main className={isBoardPage ? "board-page-main" : ""}>
         <Routes>
           <Route path="board/:boardId" element={<BoardDetails />}/>
           <Route path="boards" element={<BoardIndex />} />
@@ -44,7 +47,7 @@ export function RootCmp() {
           </Route>
         </Routes>
       </main>
-      <AppFooter />
+      {!isBoardPage && <AppFooter />}
     </div>
   )
 }

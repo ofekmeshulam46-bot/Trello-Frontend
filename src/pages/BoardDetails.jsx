@@ -17,8 +17,34 @@ export function BoardDetails() {
     const groups = board.groups
  
     return <section className="board-details">
-        <h1>Board Deatils</h1>
-        <GroupList groups={groups} />
+        <header className="board-topbar">
+            <div className="board-brand"><span className="board-brand-mark">▥</span> Trello</div>
+            <div className="board-search" aria-label="Search">⌕ <span>Search</span></div>
+            <button className="board-create" type="button">Create</button>
+        </header>
+        <div className="board-toolbar">
+            <h1>{board.title || 'Untitled board'}</h1>
+            <div className="board-toolbar-actions" aria-label="Board actions">
+                <span className="board-members">
+                    {(board.members || []).slice(0, 4).map((member, index) =>
+                        <span className="board-member" key={member._id || index} title={member.fullname}>
+                            {member.fullname?.charAt(0).toUpperCase() || '?'}
+                        </span>
+                    )}
+                </span>
+                <button type="button">⚡</button>
+                <button type="button">☰</button>
+                <button type="button">☆</button>
+                <button className="board-share" type="button">Share</button>
+            </div>
+        </div>
+        <GroupList groups={groups || []} labels={board.labels || []} />
+        <nav className="board-bottom-nav" aria-label="Board navigation">
+            <span>▤ Inbox</span>
+            <span>▦ Planner</span>
+            <span className="selected">▥ Board</span>
+            <span>▣ Switch boards</span>
+        </nav>
         {/* <pre>{JSON.stringify(board, null, 2)}</pre> */}
     </section>
 }
