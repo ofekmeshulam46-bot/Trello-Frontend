@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 
 import { BoardList } from "../cmps/BoardList.jsx"
 // import { BoardFilter } from "../cmps/BoardFilter.jsx"
@@ -16,8 +16,6 @@ import {
 export function Boardindex() {
   const boards = useSelector((storeState) => storeState.boardModule.boards)
   // const filterBy = useSelector((storeState) => storeState.filterBy)
-  const dispatch = useDispatch()
-
   useEffect(() => {
     loadBoards()
   }, [])
@@ -32,10 +30,10 @@ export function Boardindex() {
   //   setFilterBy(filterBy)
   // }
 
-  async function onRemoveBoard(boardId, boardName) {
+  async function onRemoveBoard(boardId, boardTitle) {
     try {
       await removeBoard(boardId)
-      showSuccessMsg(` removed "${boardName}" `)
+      showSuccessMsg(` removed "${boardTitle}" `)
     } catch (err) {
       console.log("Cannot remove board", err)
       showErrorMsg("Cannot remove board")
@@ -47,7 +45,7 @@ export function Boardindex() {
 
     try {
       await saveBoard(boardToSave)
-      showSuccessMsg(`Board "${boardToSave.name}" was added `)
+      showSuccessMsg(`Board "${boardToSave.title}" was added `)
     } catch (err) {
       console.log("Cannot add board", err)
       showErrorMsg("Cannot add board")
@@ -55,11 +53,12 @@ export function Boardindex() {
   }
 
   async function onEditBoard(board) {
-    const name = prompt("New name?")
-    const boardToSave = { ...board, name }
+    const title = prompt("New name?", board.title)
+    if (title === null) return
+    const boardToSave = { ...board, title }
     try {
       await saveBoard(boardToSave)
-      showSuccessMsg(`Board name updated to : ${boardToSave.name}`)
+      showSuccessMsg(`Board name updated to : ${boardToSave.title}`)
     } catch (err) {
       console.log("Cannot update board", err)
       showErrorMsg("Cannot update board")

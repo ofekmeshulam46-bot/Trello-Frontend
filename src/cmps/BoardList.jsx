@@ -10,15 +10,15 @@ export function BoardList({ boards, onRemoveBoard, onEditBoard, onAddBoard }) {
             className="board-edit"
             type="button"
             onClick={() => onEditBoard(board)}
-            aria-label={`Edit ${board.name}`}
+            aria-label={`Edit ${board.title}`}
           >
             Edit
           </button>
           <button
             className="board-remove"
             type="button"
-            onClick={() => onRemoveBoard(board._id, board.name)}
-            aria-label={`Remove ${board.name}`}
+            onClick={() => onRemoveBoard(board._id, board.title)}
+            aria-label={`Remove ${board.title}`}
           >
             x
           </button>

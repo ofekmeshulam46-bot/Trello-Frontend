@@ -28,7 +28,6 @@ export function boardReducer(state = initialState, action) {
       newState = { ...state, boards, lastRemovedBoard }
       break
     case ADD_BOARD:
-        // board.name = prompt("Enter Board Name")
       newState = { ...state, boards: [...state.boards, action.board] }
       break
     case EDIT_BOARD:
