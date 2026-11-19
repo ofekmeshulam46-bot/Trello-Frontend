@@ -23,43 +23,43 @@ import {
 } from '../store/actions/board.actions.js'
 
 export function BoardIndex() {
-    const boards = useSelector(storeState => storeState.boardModule.boards)
-    const [boardToEdit, setBoardToEdit] = useState(null)
+  const boards = useSelector((storeState) => storeState.boardModule.boards)
+  const [boardToEdit, setBoardToEdit] = useState(null)
 
-    useEffect(() => {
-        loadBoards()
-    }, [])
+  useEffect(() => {
+    loadBoards()
+  }, [])
 
-    async function onRemoveBoard(boardId, boardName) {
-        try {
-            await removeBoard(boardId)
-            showSuccessMsg(`removed "${boardName}"`)
-        } catch (err) {
-            console.log('Cannot remove board', err)
-            showErrorMsg('Cannot remove board')
-        }
+  async function onRemoveBoard(boardId, boardTitle) {
+    try {
+      await removeBoard(boardId)
+      showSuccessMsg(`removed "${boardTitle}"`)
+    } catch (err) {
+      console.log("Cannot remove board", err)
+      showErrorMsg("Cannot remove board")
     }
+  }
 
-    function onAddBoard() {
-        setBoardToEdit(boardService.getEmptyBoard())
-    }
+  function onAddBoard() {
+    setBoardToEdit(boardService.getEmptyBoard())
+  }
 
-    function onEditBoard(board) {
-        setBoardToEdit(structuredClone(board))
-    }
+  function onEditBoard(board) {
+    setBoardToEdit(structuredClone(board))
+  }
 
-    async function onSaveBoard(board) {
-        try {
-            const savedBoard = await saveBoard(board)
-            showSuccessMsg(board._id
-                ? `Board name updated to "${savedBoard.name}"`
-                : `Board "${savedBoard.name}" was added`)
-            setBoardToEdit(null)
-        } catch (err) {
-            console.log('Cannot save board', err)
-            showErrorMsg('Cannot save board')
-        }
+  async function onSaveBoard(board) {
+    try {
+      const savedBoard = await saveBoard(board)
+      showSuccessMsg(board._id
+        ? `Board name updated to "${savedBoard.title}"`
+        : `Board "${savedBoard.title}" was added`)
+      setBoardToEdit(null)
+    } catch (err) {
+      console.log("Cannot save board", err)
+      showErrorMsg("Cannot save board")
     }
+  }
 
   return (
     <section className="board-index">
