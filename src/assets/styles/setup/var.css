@@ -14,4 +14,13 @@
 
   --success: rgb(41, 189, 73);
   --error: rgb(216, 59, 59);
+
+  --board-text: #172b4d;
+  --board-muted-text: #44546f;
+  --board-border: #dfe1e6;
+  --board-surface: #fff;
+  --board-hover: #f4f5f7;
+  --board-active: #e9f2ff;
+  --board-blue: #0c66e4;
+  --board-green: #37c5a0;
 }

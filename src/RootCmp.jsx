@@ -1,4 +1,3 @@
-import React from "react"
 import { Routes, Route } from "react-router"
 
 import { HomePage } from "./pages/HomePage"
@@ -15,7 +14,7 @@ import { AppHeader } from "./cmps/AppHeader"
 import { AppFooter } from "./cmps/AppFooter"
 import { UserMsg } from "./cmps/UserMsg.jsx"
 import { LoginSignup, Login, Signup } from "./pages/LoginSignup.jsx"
-import { Boardindex } from "./pages/Boardindex.jsx"
+import { BoardIndex } from "./pages/BoardIndex.jsx"
 
 export function RootCmp() {
   return (
@@ -25,7 +24,7 @@ export function RootCmp() {
 
       <main>
         <Routes>
-          <Route path="boards" element={<Boardindex />} />
+          <Route path="boards" element={<BoardIndex />} />
           <Route path="" element={<HomePage />} />
           <Route path="about" element={<AboutUs />}>
             <Route path="team" element={<AboutTeam />} />

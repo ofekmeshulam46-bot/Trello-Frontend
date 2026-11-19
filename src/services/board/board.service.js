@@ -1,122 +1,94 @@
-import { storageService } from "../async-storage.service.js"
+import { storageService } from '../async-storage.service.js'
 import {
-  makeId,
-  makeLorem,
-  getRandomIntInclusive,
-  loadFromStorage,
-  saveToStorage,
-  debounce,
-} from "../util.service.js"
-import { userService } from "../user/user.service.local.js"
+    makeId,
+    getRandomIntInclusive,
+    loadFromStorage,
+    saveToStorage,
+} from '../util.service.js'
+import { userService } from '../user'
 
-const STORAGE_KEY = "boardDB"
+const STORAGE_KEY = 'board'
 
 const boardNames = [
-  "Marketing Tasks",
-  "Product Roadmap",
-  "Sales Pipeline",
-  "Content Calendar",
-  "Bug Tracker",
-  "Team Onboarding",
-  "Daily To-Do List",
-  "Personal Tasks",
-  "Reading List",
-  "Trip Planner",
-  "Weekly Meal Plan",
-  "Event Planning",
-  "Project Ideas",
-  "2026 Goals",
-  "Design Requests",
-  "Client Projects",
+    'Marketing Tasks',
+    'Product Roadmap',
+    'Sales Pipeline',
+    'Content Calendar',
+    'Bug Tracker',
+    'Team Onboarding',
+    'Daily To-Do List',
+    'Personal Tasks',
 ]
 
-const labels = [
-  "On wheels",
-  "Box game",
-  "Art",
-  "Baby",
-  "Doll",
-  "Puzzle",
-  "Outdoor",
-  "Battery Powered",
-]
+const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor', 'Battery Powered']
+
+export const boardService = {
+    query,
+    getById,
+    save,
+    remove,
+    getEmptyBoard,
+    getDefaultFilter,
+}
 
 _createBoards()
 
-export const boardService = {
-  query,
-  getById,
-  save,
-  remove,
-  getEmptyBoard,
-  getDefaultFilter,
-}
-
 async function query(filterBy = {}) {
-  try {
     let boards = await storageService.query(STORAGE_KEY)
     if (filterBy.txt) {
-      const regExp = new RegExp(filterBy.txt, "i")
-      boards = boards.filter((board) => regExp.test(board.name))
-    }
-    if (filterBy.maxPrice) {
-      boards = boards.filter((board) => board.price <= +filterBy.maxPrice)
+        const regExp = new RegExp(filterBy.txt, 'i')
+        boards = boards.filter(board => regExp.test(board.name))
     }
     return boards
-  } catch (err) {
-    console.log(err)
-    showErrorMsg("query error")
-    throw err
-  }
 }
 
 function getById(boardId) {
-  return storageService.get(STORAGE_KEY, boardId)
+    return storageService.get(STORAGE_KEY, boardId)
 }
 
 function remove(boardId) {
-  return storageService.remove(STORAGE_KEY, boardId)
+    return storageService.remove(STORAGE_KEY, boardId)
 }
 
 function save(board) {
-  if (board._id) {
-    return storageService.put(STORAGE_KEY, board)
-  } else {
-    // when switching to backend - remove the next line     <????
-    board.name = prompt("Enter Board Name")
-    board.owner = userService.getLoggedinUser()
-    return storageService.post(STORAGE_KEY, board)
-  }
+    if (board._id) return storageService.put(STORAGE_KEY, board)
+    return storageService.post(STORAGE_KEY, {
+        ...board,
+        owner: userService.getLoggedinUser(),
+    })
 }
 
 function getEmptyBoard() {
-  return {
-    // name: boardNames[getRandomIntInclusive(0, boardNames.length - 1)],
-    name: "",
-    labels: labels[getRandomIntInclusive(0, labels.length - 1)],
-    createdAt: Date.now(),
-  }
-}
-
-function _createBoards() {
-  const boards = loadFromStorage(STORAGE_KEY) || []
-  if (boards.length > 0) return
-
-  for (var i = 0; i < 4; i++) {
-    const board = _createBoard()
-    board.name = boardNames[getRandomIntInclusive(0, boardNames.length - 1)]
-    boards.push(board)
-  }
-  saveToStorage(STORAGE_KEY, boards)
-}
-
-function _createBoard() {
-  const board = getEmptyBoard()
-//   board.name = prompt("Enter Board Name")
-  board._id = makeId()
-  return board
+    return {
+        name: '',
+        labels: labels[getRandomIntInclusive(0, labels.length - 1)],
+        createdAt: Date.now(),
+    }
 }
 
 function getDefaultFilter() {
-  return { txt: "", maxPrice: "" }
+    return { txt: '' }
+}
+
+function _createBoards() {
+    let boards = loadFromStorage(STORAGE_KEY)
+    if (!boards) boards = loadFromStorage('boardDB') || []
+    if (boards.length > 0) {
+        saveToStorage(STORAGE_KEY, boards)
+        return
+    }
+
+    boards = []
+    for (var i = 0; i < 4; i++) {
+        const board = _createBoard()
+        board.name = boardNames[getRandomIntInclusive(0, boardNames.length - 1)]
+        boards.push(board)
+    }
+    saveToStorage(STORAGE_KEY, boards)
+}
+
+function _createBoard() {
+    const board = getEmptyBoard()
+    board._id = makeId()
+    return board
 }
