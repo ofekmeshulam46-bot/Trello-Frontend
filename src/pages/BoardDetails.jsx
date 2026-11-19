@@ -15,12 +15,7 @@ export function BoardDetails() {
     if(!board) return <p>Loading board...</p>
     
     const groups = board.groups
-    console.log(groups)
-
-
-
-
-
+ 
     return <section className="board-details">
         <h1>Board Deatils</h1>
         <GroupList groups={groups} />
