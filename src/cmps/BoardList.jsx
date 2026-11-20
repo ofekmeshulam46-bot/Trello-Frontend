@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { BoardPreview } from './BoardPreview.jsx'
 
 export function BoardList({ boards, onRemoveBoard, onEditBoard, onAddBoard }) {
@@ -5,7 +6,9 @@ export function BoardList({ boards, onRemoveBoard, onEditBoard, onAddBoard }) {
     <ul className="board-list">
       {boards.map((board) => (
         <li className="board-card" key={board._id}>
-          <BoardPreview board={board} />
+          <Link to={`/board/${board._id}`}>
+            <BoardPreview board={board} />
+          </Link>
           <button
             className="board-edit"
             type="button"
