@@ -38,7 +38,10 @@ export function BoardDetails() {
                 <button className="board-share" type="button">Share</button>
             </div>
         </div>
-        <GroupList groups={groups || []} labels={board.labels || []} />
+        <GroupList 
+        groups={groups || []} 
+        labels={board.labels || []}
+        boardId={board._id} />
         <nav className="board-bottom-nav" aria-label="Board navigation">
             <span>▤ Inbox</span>
             <span>▦ Planner</span>

@@ -19,6 +19,7 @@ export const boardService = {
   remove,
   getEmptyBoard,
   getDefaultFilter,
+  getEmptyGroup,
 }
 
 
@@ -67,7 +68,7 @@ function getEmptyBoard() {
       fullname: 'Baba Blue',
       imgUrl: 'http://some-img',
     }
-  
+
   return {
     title: '',
     isStarred: false,
@@ -83,6 +84,19 @@ function getEmptyBoard() {
     activities: [],
   }
 }
+
+export function getEmptyGroup() {
+  return {
+    id: makeId(),
+    title: '',
+    archivedAt: '',
+    tasks: [],
+    style: {},
+  } 
+}
+
+
+
 
 function _createBoards() {
   const boards = loadFromStorage(STORAGE_KEY)
