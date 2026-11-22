@@ -35,12 +35,13 @@
         color: var(--board-text);
         cursor: pointer;
 
-        & svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-            stroke: none;
-        }
+    }
+
+    & .sidebar-switcher-icon {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+        stroke: none;
     }
 
     & .sidebar-app-icon {
@@ -52,13 +53,14 @@
 
         color: var(--board-surface);
 
-        & svg {
-            width: 24px;
-            height: 24px;
-            fill: var(--board-blue);
-            stroke: var(--board-surface);
-            stroke-width: 1.5;
-        }
+    }
+
+    & .sidebar-trello-icon {
+        width: 24px;
+        height: 24px;
+        fill: var(--board-blue);
+        stroke: var(--board-surface);
+        stroke-width: 1.5;
     }
 
     & .sidebar-brand-name {
@@ -96,15 +98,18 @@
             color: var(--board-blue);
         }
 
-        & svg {
-            width: 16px;
-            height: 16px;
-            fill: none;
-            stroke: currentColor;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            stroke-width: 1.7;
-        }
+    }
+
+    & .boards-icon,
+    & .templates-icon,
+    & .home-icon {
+        width: 16px;
+        height: 16px;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.7;
     }
 
     & .sidebar-workspaces {
@@ -141,17 +146,17 @@
             background: var(--board-hover);
         }
 
-        & > svg {
-            width: 18px;
-            height: 18px;
-            margin-inline-start: auto;
+    }
 
-            fill: none;
-            stroke: currentColor;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            stroke-width: 2;
-        }
+    & .chevron-down-icon {
+        width: 18px;
+        height: 18px;
+        margin-inline-start: auto;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2;
     }
 
     & .sidebar-workspace-logo,
@@ -233,15 +238,18 @@
             background: var(--board-hover);
         }
 
-        & svg {
-            width: 17px;
-            height: 17px;
-            fill: none;
-            stroke: currentColor;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            stroke-width: 1.7;
-        }
+    }
+
+    & .boards-icon,
+    & .members-icon,
+    & .settings-icon {
+        width: 17px;
+        height: 17px;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.7;
     }
 
     & .board-list {
@@ -252,6 +260,41 @@
         gap: 12px;
         margin: 0;
         padding: 0;
+    }
+
+    & .board-section {
+        margin-block-end: 32px;
+    }
+
+    & .board-section-title {
+        display: flex;
+        height: 32px;
+        align-items: center;
+        gap: 8px;
+
+        margin: 0 0 8px;
+        color: var(--board-text);
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    & .board-section-icon {
+        display: grid;
+        width: 20px;
+        height: 20px;
+        place-items: center;
+    }
+
+    & .board-section-icon .board-star-icon {
+        width: 18px;
+        height: 18px;
+        fill: none;
+    }
+
+    & .board-section-list {
+        --min-column-size: 220px;
+
+        grid-template-columns: repeat(auto-fill, minmax(var(--min-column-size), 220px));
     }
 
     & .board-card,
@@ -270,10 +313,60 @@
     }
 
     & .board-cover {
+        position: relative;
         height: 72px;
         background: linear-gradient(135deg, var(--clr3), var(--clr1));
         background-position: center;
         background-size: cover;
+        transition: filter 0.16s ease;
+    }
+
+    & .board-card:hover .board-cover {
+        filter: brightness(0.72);
+    }
+
+    & .board-star {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        z-index: 1;
+
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+
+        border: 0;
+        border-radius: 3px;
+        background: rgba(9, 30, 66, 0.42);
+        color: #fff;
+        opacity: 0;
+        cursor: pointer;
+        transition: opacity 0.16s ease, transform 0.16s ease;
+
+        &:hover {
+            transform: scale(1.08);
+        }
+    }
+
+    & .board-star-icon {
+        width: 16px;
+        height: 16px;
+        fill: transparent;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.8;
+    }
+
+    & .board-card:hover .board-star,
+    & .board-star.starred,
+    & .board-star:focus-visible {
+        opacity: 1;
+    }
+
+    & .board-star.starred .board-star-icon {
+        fill: #fff;
     }
 
     & .board-card:first-child .board-cover {

@@ -10,6 +10,7 @@ import {
     HomeIcon,
     MembersIcon,
     SettingsIcon,
+    StarIcon,
     TemplatesIcon,
     TrelloIcon,
 } from '../assets/icons/board-icons.jsx'
@@ -25,6 +26,7 @@ import {
 export function BoardIndex() {
   const boards = useSelector((storeState) => storeState.boardModule.boards)
   const [boardToEdit, setBoardToEdit] = useState(null)
+  const starredBoards = boards.filter((board) => board.isStarred === true)
 
   useEffect(() => {
     loadBoards()
@@ -61,30 +63,47 @@ export function BoardIndex() {
     }
   }
 
+  async function onToggleStar(board) {
+    const isStarred = board.isStarred === true
+      ? false
+      : true
+    const boardToUpdate = {
+      ...structuredClone(board),
+      isStarred,
+    }
+
+    try {
+      await saveBoard(boardToUpdate)
+    } catch (err) {
+      console.log("Cannot update starred board", err)
+      showErrorMsg("Cannot update board")
+    }
+  }
+
   return (
     <section className="board-index">
       <aside className="board-sidebar">
         <div className="sidebar-brand">
           <span className="sidebar-app-icon" aria-hidden="true">
-            <TrelloIcon />
+            {TrelloIcon}
           </span>
           <span className="sidebar-brand-name">Trello</span>
           <button className="sidebar-switcher" type="button" aria-label="Open app switcher">
-            <AppSwitcherIcon />
+            {AppSwitcherIcon}
           </button>
         </div>
 
         <nav className="sidebar-nav" aria-label="Workspace navigation">
           <button className="sidebar-nav-item active" type="button">
-            <BoardsIcon />
+            {BoardsIcon}
             <span>Boards</span>
           </button>
           <button className="sidebar-nav-item" type="button">
-            <TemplatesIcon />
+            {TemplatesIcon}
             <span>Templates</span>
           </button>
           <button className="sidebar-nav-item" type="button">
-            <HomeIcon />
+            {HomeIcon}
             <span>Home</span>
           </button>
         </nav>
@@ -94,27 +113,48 @@ export function BoardIndex() {
           <button className="sidebar-workspace" type="button">
             <span className="sidebar-workspace-logo">T</span>
             <span>Trello Workspace</span>
-            <ChevronDownIcon />
+            {ChevronDownIcon}
           </button>
         </div>
       </aside>
 
       <main className="board-main">
+        {starredBoards.length > 0 && (
+          <section className="board-section starred-boards-section">
+            <h3 className="board-section-title">
+              <span className="board-section-icon" aria-hidden="true">
+                {StarIcon}
+              </span>
+              <span>Starred boards</span>
+            </h3>
+            <BoardList
+              boards={starredBoards}
+              onRemoveBoard={onRemoveBoard}
+              onEditBoard={onEditBoard}
+              onAddBoard={onAddBoard}
+              onToggleStar={onToggleStar}
+              showCreateBoard={false}
+              showBoardActions={false}
+              listClassName="board-section-list"
+            />
+          </section>
+        )}
+
         <h3 className="workspace-title">YOUR WORKSPACES</h3>
         <div className="workspace-header">
           <span className="workspace-logo">T</span>
           <h3 className="workspace-name">Trello Workspace</h3>
           <div className="workspace-utilities">
             <button className="workspace-utility" type="button">
-              <BoardsIcon />
+              {BoardsIcon}
               <span>Boards</span>
             </button>
             <button className="workspace-utility" type="button">
-              <MembersIcon />
+              {MembersIcon}
               <span>Members</span>
             </button>
             <button className="workspace-utility" type="button">
-              <SettingsIcon />
+              {SettingsIcon}
               <span>Settings</span>
             </button>
           </div>
@@ -124,6 +164,7 @@ export function BoardIndex() {
           onRemoveBoard={onRemoveBoard}
           onEditBoard={onEditBoard}
           onAddBoard={onAddBoard}
+          onToggleStar={onToggleStar}
         />
       </main>
       {boardToEdit && (
