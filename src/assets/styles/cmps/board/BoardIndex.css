@@ -309,7 +309,15 @@
     }
 
     & .board-preview {
+        position: relative;
         height: 100%;
+    }
+
+    & .board-preview-link {
+        display: block;
+        height: 100%;
+        color: inherit;
+        cursor: pointer;
     }
 
     & .board-cover {
