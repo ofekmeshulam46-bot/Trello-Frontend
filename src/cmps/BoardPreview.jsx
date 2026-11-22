@@ -5,14 +5,14 @@ export function BoardPreview({ board, onToggleStar }) {
     <article className="board-preview">
       <div className="board-cover">
         <button
-          className={`board-star${board.isStarred ? ' starred' : ''}`}
+          className={`board-star${board.isStarred === true ? ' starred' : ''}`}
           type="button"
           onClick={(ev) => {
             ev.stopPropagation()
             onToggleStar(board)
           }}
-          aria-label={`${board.isStarred ? 'Remove' : 'Add'} ${board.title} ${board.isStarred ? 'from' : 'to'} starred boards`}
-          aria-pressed={!!board.isStarred}
+          aria-label={`${board.isStarred === true ? 'Remove' : 'Add'} ${board.title} ${board.isStarred === true ? 'from' : 'to'} starred boards`}
+          aria-pressed={board.isStarred === true}
         >
           {StarIcon}
         </button>

@@ -297,8 +297,8 @@
         z-index: 1;
 
         display: grid;
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
         place-items: center;
 
         border: 0;
@@ -315,8 +315,8 @@
     }
 
     & .board-star-icon {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         fill: transparent;
         stroke: currentColor;
         stroke-linecap: round;

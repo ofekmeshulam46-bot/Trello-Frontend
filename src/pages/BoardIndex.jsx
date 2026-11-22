@@ -62,9 +62,10 @@ export function BoardIndex() {
   }
 
   async function onToggleStar(board) {
+    const isStarred = board.isStarred !== true
     const boardToUpdate = {
       ...structuredClone(board),
-      isStarred: !board.isStarred,
+      isStarred,
     }
 
     try {
