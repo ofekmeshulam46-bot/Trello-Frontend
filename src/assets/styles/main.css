@@ -30,3 +30,7 @@
 @import "cmps/review/ReviewEdit";
 @import "cmps/review/ReviewList";
 @import "cmps/review/ReviewPreview";
+
+@import "cmps/board/GroupList.css";
+@import "cmps/board/BoardDetails.css";
+

@@ -5,6 +5,7 @@ import {
     EDIT_BOARD,
     REMOVE_BOARD,
     SET_BOARDS,
+    SET_BOARD,
 } from '../reducers/board.reducer'
 
 export async function loadBoards(filterBy) {
@@ -13,6 +14,16 @@ export async function loadBoards(filterBy) {
         store.dispatch(getCmdSetBoards(boards))
     } catch (err) {
         console.log('Cannot load boards', err)
+        throw err
+    }
+}
+
+export async function loadBoard(boardId) {
+    try {
+        const board = await boardService.getById(boardId)
+        store.dispatch(getCmdSetBoard(board))
+    } catch (err) {
+        console.log('Cannot load board', err)
         throw err
     }
 }
@@ -41,8 +52,55 @@ export async function saveBoard(board) {
     }
 }
 
+export async function addGroup(boardId, groupTitle) {
+    try {
+        const board = await boardService.getById(boardId)
+
+        const group = boardService.getEmptyGroup()
+        group.title = groupTitle
+
+        const updatedBoard = {
+            ...board,
+            groups: [...board.groups, group]
+        }
+        const savedBoard = await boardService.save(updatedBoard)
+        store.dispatch(getCmdSetBoard(savedBoard))
+
+        return savedBoard
+    } catch (err) {
+        console.log('Cannot add group', err)
+        throw err
+    }
+}
+
+
+export async function removeGroup(boardId, groupId) {
+    try {
+        const board = await boardService.getById(boardId)
+        const updatedGroups = board.groups.filter(group => group.id !== groupId)
+
+        const updatedBoard = {
+            ...board,
+            groups: updatedGroups
+        }
+
+        const savedBoard = await boardService.save(updatedBoard)
+        store.dispatch(getCmdSetBoard(savedBoard))
+
+        return savedBoard
+    } catch (err) {
+        console.log('Cannot remove group', err)
+        throw err
+    }
+}
+
+
 function getCmdSetBoards(boards) {
     return { type: SET_BOARDS, boards }
+}
+
+function getCmdSetBoard(board) {
+    return { type: SET_BOARD, board }
 }
 
 function getCmdAddBoard(board) {
