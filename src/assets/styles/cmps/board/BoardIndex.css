@@ -262,6 +262,41 @@
         padding: 0;
     }
 
+    & .board-section {
+        margin-block-end: 32px;
+    }
+
+    & .board-section-title {
+        display: flex;
+        height: 32px;
+        align-items: center;
+        gap: 8px;
+
+        margin: 0 0 8px;
+        color: var(--board-text);
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    & .board-section-icon {
+        display: grid;
+        width: 20px;
+        height: 20px;
+        place-items: center;
+    }
+
+    & .board-section-icon .board-star-icon {
+        width: 18px;
+        height: 18px;
+        fill: none;
+    }
+
+    & .board-section-list {
+        --min-column-size: 220px;
+
+        grid-template-columns: repeat(auto-fill, minmax(var(--min-column-size), 220px));
+    }
+
     & .board-card,
     & .create-board-card {
         position: relative;

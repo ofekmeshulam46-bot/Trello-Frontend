@@ -10,6 +10,7 @@ import {
     HomeIcon,
     MembersIcon,
     SettingsIcon,
+    StarIcon,
     TemplatesIcon,
     TrelloIcon,
 } from '../assets/icons/board-icons.jsx'
@@ -25,6 +26,7 @@ import {
 export function BoardIndex() {
   const boards = useSelector((storeState) => storeState.boardModule.boards)
   const [boardToEdit, setBoardToEdit] = useState(null)
+  const starredBoards = boards.filter((board) => board.isStarred === true)
 
   useEffect(() => {
     loadBoards()
@@ -62,7 +64,9 @@ export function BoardIndex() {
   }
 
   async function onToggleStar(board) {
-    const isStarred = board.isStarred !== true
+    const isStarred = board.isStarred === true
+      ? false
+      : true
     const boardToUpdate = {
       ...structuredClone(board),
       isStarred,
@@ -115,6 +119,27 @@ export function BoardIndex() {
       </aside>
 
       <main className="board-main">
+        {starredBoards.length > 0 && (
+          <section className="board-section starred-boards-section">
+            <h3 className="board-section-title">
+              <span className="board-section-icon" aria-hidden="true">
+                {StarIcon}
+              </span>
+              <span>Starred boards</span>
+            </h3>
+            <BoardList
+              boards={starredBoards}
+              onRemoveBoard={onRemoveBoard}
+              onEditBoard={onEditBoard}
+              onAddBoard={onAddBoard}
+              onToggleStar={onToggleStar}
+              showCreateBoard={false}
+              showBoardActions={false}
+              listClassName="board-section-list"
+            />
+          </section>
+        )}
+
         <h3 className="workspace-title">YOUR WORKSPACES</h3>
         <div className="workspace-header">
           <span className="workspace-logo">T</span>
