@@ -61,30 +61,44 @@ export function BoardIndex() {
     }
   }
 
+  async function onToggleStar(board) {
+    const boardToUpdate = {
+      ...structuredClone(board),
+      isStarred: !board.isStarred,
+    }
+
+    try {
+      await saveBoard(boardToUpdate)
+    } catch (err) {
+      console.log("Cannot update starred board", err)
+      showErrorMsg("Cannot update board")
+    }
+  }
+
   return (
     <section className="board-index">
       <aside className="board-sidebar">
         <div className="sidebar-brand">
           <span className="sidebar-app-icon" aria-hidden="true">
-            <TrelloIcon />
+            {TrelloIcon}
           </span>
           <span className="sidebar-brand-name">Trello</span>
           <button className="sidebar-switcher" type="button" aria-label="Open app switcher">
-            <AppSwitcherIcon />
+            {AppSwitcherIcon}
           </button>
         </div>
 
         <nav className="sidebar-nav" aria-label="Workspace navigation">
           <button className="sidebar-nav-item active" type="button">
-            <BoardsIcon />
+            {BoardsIcon}
             <span>Boards</span>
           </button>
           <button className="sidebar-nav-item" type="button">
-            <TemplatesIcon />
+            {TemplatesIcon}
             <span>Templates</span>
           </button>
           <button className="sidebar-nav-item" type="button">
-            <HomeIcon />
+            {HomeIcon}
             <span>Home</span>
           </button>
         </nav>
@@ -94,7 +108,7 @@ export function BoardIndex() {
           <button className="sidebar-workspace" type="button">
             <span className="sidebar-workspace-logo">T</span>
             <span>Trello Workspace</span>
-            <ChevronDownIcon />
+            {ChevronDownIcon}
           </button>
         </div>
       </aside>
@@ -106,15 +120,15 @@ export function BoardIndex() {
           <h3 className="workspace-name">Trello Workspace</h3>
           <div className="workspace-utilities">
             <button className="workspace-utility" type="button">
-              <BoardsIcon />
+              {BoardsIcon}
               <span>Boards</span>
             </button>
             <button className="workspace-utility" type="button">
-              <MembersIcon />
+              {MembersIcon}
               <span>Members</span>
             </button>
             <button className="workspace-utility" type="button">
-              <SettingsIcon />
+              {SettingsIcon}
               <span>Settings</span>
             </button>
           </div>
@@ -124,6 +138,7 @@ export function BoardIndex() {
           onRemoveBoard={onRemoveBoard}
           onEditBoard={onEditBoard}
           onAddBoard={onAddBoard}
+          onToggleStar={onToggleStar}
         />
       </main>
       {boardToEdit && (

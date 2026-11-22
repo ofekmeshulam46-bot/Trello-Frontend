@@ -1,11 +1,11 @@
 import { BoardPreview } from './BoardPreview.jsx'
 
-export function BoardList({ boards, onRemoveBoard, onEditBoard, onAddBoard }) {
+export function BoardList({ boards, onRemoveBoard, onEditBoard, onAddBoard, onToggleStar }) {
   return (
     <ul className="board-list">
       {boards.map((board) => (
         <li className="board-card" key={board._id}>
-          <BoardPreview board={board} />
+          <BoardPreview board={board} onToggleStar={onToggleStar} />
           <button
             className="board-edit"
             type="button"
