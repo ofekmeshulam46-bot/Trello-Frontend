@@ -59,16 +59,37 @@ export async function addGroup(boardId, groupTitle) {
         const group = boardService.getEmptyGroup()
         group.title = groupTitle
 
-        const updateBoard = {
+        const updatedBoard = {
             ...board,
             groups: [...board.groups, group]
         }
-        const savedBoard = await boardService.save(updateBoard)
+        const savedBoard = await boardService.save(updatedBoard)
         store.dispatch(getCmdSetBoard(savedBoard))
 
         return savedBoard
     } catch (err) {
         console.log('Cannot load boards', err)
+        throw err
+    }
+}
+
+
+export async function removeGroup(boardId, groupId) {
+    try {
+        const board = await boardService.getById(boardId)
+        const updatedGroups = board.groups.filter(group => group.id !== groupId)
+
+        const updatedBoard = {
+            ...board,
+            groups: updatedGroups
+        }
+
+        const savedBoard = await boardService.save(updatedBoard)
+        store.dispatch(getCmdSetBoard(savedBoard))
+
+        return savedBoard
+    } catch (err) {
+        console.log('Cannot remove group', err)
         throw err
     }
 }

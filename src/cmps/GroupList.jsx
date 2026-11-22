@@ -15,7 +15,11 @@ export function GroupList({ groups, labels = [], boardId }) {
         <ul className="group-list">
             {groups.map(group =>
                 <li key={group.id}>
-                    <GroupPreview group={group} labels={labels} />
+                    <GroupPreview
+                        group={group}
+                        labels={labels}
+                        boardId={boardId}
+                    />
                 </li>
             )}
             <li className="add-group">
