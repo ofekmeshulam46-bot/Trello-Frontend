@@ -68,7 +68,7 @@ export async function addGroup(boardId, groupTitle) {
 
         return savedBoard
     } catch (err) {
-        console.log('Cannot load boards', err)
+        console.log('Cannot add group', err)
         throw err
     }
 }
