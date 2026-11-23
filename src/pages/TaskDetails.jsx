@@ -7,6 +7,7 @@ import { saveTask } from "../store/actions/board.actions.js"
 export function TaskDetails() {
     const [description, setDescription] = useState('')
     const [title, setTitle] = useState('')
+    const [dueDate, setDueDate] = useState('')
 
     const navigate = useNavigate()
     const { boardId, taskId } = useParams()
@@ -21,7 +22,8 @@ export function TaskDetails() {
     useEffect(() => {
         setDescription(task?.description || '')
         setTitle(task?.title || '')
-    }, [task?.description, task?.title])
+        setDueDate(task?.dueDate || '')
+    }, [task?.description, task?.title, task?.dueDate])
 
 
     function onClose() {
@@ -51,12 +53,22 @@ export function TaskDetails() {
                 placeholder="Add a more detailed description..."
             />}
 
-           
-            
+
+
 
             <button onClick={onClose}>Close</button>
             <button onClick={() => onSaveField('title', title)}>save title</button>
             <button onClick={() => onSaveField('description', description)}>save</button>
+
+            <input
+                type="date"
+                value={dueDate}
+                onChange={ev => setDueDate(ev.target.value)}
+            />
+
+            <button onClick={() => onSaveField('dueDate', dueDate)}>
+                Save date
+            </button>
 
         </section>
     </div>
