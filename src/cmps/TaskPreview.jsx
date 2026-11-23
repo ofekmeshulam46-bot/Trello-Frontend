@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { TaskDetails } from "./TaskDetails"
+import { TaskDetails } from "../pages/TaskDetails"
 
 export function TaskPreview({ task, labels = [] ,boardId} ) {
 

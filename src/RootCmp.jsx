@@ -16,7 +16,7 @@ import { UserMsg } from "./cmps/UserMsg.jsx"
 import { LoginSignup, Login, Signup } from "./pages/LoginSignup.jsx"
 import { BoardIndex } from "./pages/Boardindex.jsx"
 import { BoardDetails } from "./pages/BoardDetails.jsx"
-import { TaskDetails } from "./cmps/TaskDetails.jsx"
+import { TaskDetails } from "./pages/TaskDetails.jsx"
 
 export function RootCmp() {
   const { pathname } = useLocation()
