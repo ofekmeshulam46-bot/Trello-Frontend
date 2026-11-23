@@ -16,6 +16,7 @@ import { UserMsg } from "./cmps/UserMsg.jsx"
 import { LoginSignup, Login, Signup } from "./pages/LoginSignup.jsx"
 import { BoardIndex } from "./pages/Boardindex.jsx"
 import { BoardDetails } from "./pages/BoardDetails.jsx"
+import { TaskDetails } from "./cmps/TaskDetails.jsx"
 
 export function RootCmp() {
   const { pathname } = useLocation()
@@ -28,7 +29,11 @@ export function RootCmp() {
 
       <main className={isBoardPage ? "board-page-main" : ""}>
         <Routes>
-          <Route path="board/:boardId" element={<BoardDetails />}/>
+
+          <Route path="board/:boardId" element={<BoardDetails />}>
+             <Route path="task/:taskId" element={<TaskDetails />} />
+          </Route>
+         
           <Route path="boards" element={<BoardIndex />} />
           <Route path="" element={<HomePage />} />
           <Route path="about" element={<AboutUs />}>
@@ -44,6 +49,7 @@ export function RootCmp() {
           <Route path="auth" element={<LoginSignup />}>
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
+
           </Route>
         </Routes>
       </main>

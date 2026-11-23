@@ -3,19 +3,20 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { loadBoard } from '../store/actions/board.actions'
 import { GroupList } from '../cmps/GroupList'
+import { Outlet } from 'react-router-dom'
 
 export function BoardDetails() {
-    const {boardId} = useParams()
+    const { boardId } = useParams()
     const board = useSelector(storeState => storeState.boardModule.board)
 
     useEffect(() => {
         loadBoard(boardId)
     }, [boardId])
 
-    if(!board) return <p>Loading board...</p>
-    
+    if (!board) return <p>Loading board...</p>
+
     const groups = board.groups
- 
+
     return <section className="board-details">
         <header className="board-topbar">
             <div className="board-brand"><span className="board-brand-mark">▥</span> Trello</div>
@@ -38,10 +39,10 @@ export function BoardDetails() {
                 <button className="board-share" type="button">Share</button>
             </div>
         </div>
-        <GroupList 
-        groups={groups || []} 
-        labels={board.labels || []}
-        boardId={board._id} />
+        <GroupList
+            groups={groups || []}
+            labels={board.labels || []}
+            boardId={board._id} />
         <nav className="board-bottom-nav" aria-label="Board navigation">
             <span>▤ Inbox</span>
             <span>▦ Planner</span>
@@ -49,5 +50,6 @@ export function BoardDetails() {
             <span>▣ Switch boards</span>
         </nav>
         {/* <pre>{JSON.stringify(board, null, 2)}</pre> */}
+        <Outlet />
     </section>
 }

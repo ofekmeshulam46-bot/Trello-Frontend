@@ -1,11 +1,17 @@
-export function TaskPreview({ task, labels = [] }) {
+import { Link } from "react-router-dom"
+import { TaskDetails } from "./TaskDetails"
+
+export function TaskPreview({ task, labels = [] ,boardId} ) {
+
     const taskLabels = labels.filter(label => task.labelIds?.includes(label.id))
     const checklistItems = (task.checklists || []).flatMap(checklist => checklist.todos || [])
     const completedItems = checklistItems.filter(item => item.isDone).length
     const dueDate = task.dueDate ? new Date(task.dueDate) : null
     const hasValidDueDate = dueDate && !Number.isNaN(dueDate.getTime())
 
-    return <article className="task-card">
+    return <Link className="task-details-link" to={`/board/${boardId}/task/${task.id}`}>
+        <article className="task-card">
+ 
         {task.style?.backgroundImage && (
             <div className="task-cover" style={{ backgroundImage: `url("${task.style.backgroundImage}")` }} />
         )}
@@ -37,4 +43,5 @@ export function TaskPreview({ task, labels = [] }) {
             </footer>
         )}
     </article>
+     </Link>
 }
