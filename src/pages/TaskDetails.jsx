@@ -18,6 +18,7 @@ export function TaskDetails() {
     )
 
     const task = group?.tasks.find(task => task.id === taskId)
+    const labels = board?.labels || []
 
     useEffect(() => {
         setDescription(task?.description || '')
@@ -38,6 +39,16 @@ export function TaskDetails() {
         await saveTask(boardId, group.id, updatedTask)
     }
 
+    function onToggleLabel(labelId) {
+    const labelIds = task.labelIds || []
+
+    const updatedLabelIds = labelIds.includes(labelId)
+        ? labelIds.filter(id => id !== labelId)
+        : [...labelIds, labelId]
+
+    onSaveField('labelIds', updatedLabelIds)
+}
+
     return <div className="modal-overlay">
         <section className="task-details-modal">
 
@@ -46,6 +57,17 @@ export function TaskDetails() {
                 value={title}
                 onChange={ev => setTitle(ev.target.value)}
             />
+
+            {labels.map(label => (
+                <label key={label.id}>
+                    <input
+                        type="checkbox"
+                        checked={task?.labelIds?.includes(label.id) || false}
+                        onChange={() => onToggleLabel(label.id)}
+                    />
+                    {label.title}
+                </label>
+            ))}
 
             {task && <textarea
                 value={description}
