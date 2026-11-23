@@ -51,7 +51,7 @@ export function TaskDetails() {
         if (!task || !group) return false
         setSaveError('')
         try {
-            await saveTask(boardId, group.id, { ...task, [field]: value })
+            await saveTask(boardId, group.id, task.id, { [field]: value })
             return true
         } catch (err) {
             console.error('Unable to save task details', err)

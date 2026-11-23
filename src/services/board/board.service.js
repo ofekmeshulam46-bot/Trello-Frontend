@@ -96,16 +96,20 @@ function getEmptyGroup() {
   }
 }
 
-async function saveTask(boardId, groupId, updatedTask) {
+async function saveTask(boardId, groupId, taskId, changes) {
   const board = await getById(boardId)
 
   const group = board.groups.find(group => group.id === groupId)
   if (!group) throw new Error('Group not found')
 
-  const taskIdx = group.tasks.findIndex(task => task.id === updatedTask.id)
-  if (taskIdx === -1) throw new Error('Task not found')
+  const isTaskFound = group.tasks.some(task => task.id === taskId)
+  if (!isTaskFound) throw new Error('Task not found')
 
-  group.tasks[taskIdx] = updatedTask
+  group.tasks = group.tasks.map(task =>
+    task.id === taskId
+      ? { ...task, ...changes }
+      : task
+  )
   return await save(board)
 }
 

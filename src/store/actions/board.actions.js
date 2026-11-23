@@ -52,9 +52,9 @@ export async function saveBoard(board) {
     }
 }
 
-export async function saveTask(boardId, groupId, updatedTask) {
+export async function saveTask(boardId, groupId, taskId, changes) {
     try {
-        const savedBoard = await boardService.saveTask(boardId, groupId, updatedTask)
+        const savedBoard = await boardService.saveTask(boardId, groupId, taskId, changes)
         store.dispatch(getCmdSetBoard(savedBoard))
         return savedBoard
     } catch (err) {
