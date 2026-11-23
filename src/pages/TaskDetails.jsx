@@ -6,6 +6,7 @@ import { saveTask } from "../store/actions/board.actions.js"
 
 export function TaskDetails() {
     const [description, setDescription] = useState('')
+    const [title, setTitle] = useState('')
 
     const navigate = useNavigate()
     const { boardId, taskId } = useParams()
@@ -19,22 +20,30 @@ export function TaskDetails() {
 
     useEffect(() => {
         setDescription(task?.description || '')
-    }, [task?.description])
+        setTitle(task?.title || '')
+    }, [task?.description, task?.title])
 
 
     function onClose() {
         navigate(`/board/${boardId}`)
     }
 
-    function onSaveDescription(){
-        const updatedTask = { ...task, description }
-        saveTask(boardId, group.id, updatedTask)
+    async function onSaveField(field, value) {
+        const updatedTask = {
+            ...task,
+            [field]: value
+        }
+        await saveTask(boardId, group.id, updatedTask)
     }
 
     return <div className="modal-overlay">
         <section className="task-details-modal">
-            
-            <h2>{task?.title}</h2>
+
+            <input
+                type="text"
+                value={title}
+                onChange={ev => setTitle(ev.target.value)}
+            />
 
             {task && <textarea
                 value={description}
@@ -42,8 +51,13 @@ export function TaskDetails() {
                 placeholder="Add a more detailed description..."
             />}
 
+           
+            
+
             <button onClick={onClose}>Close</button>
-            <button onClick={onSaveDescription}>Save</button>
+            <button onClick={() => onSaveField('title', title)}>save title</button>
+            <button onClick={() => onSaveField('description', description)}>save</button>
+
         </section>
     </div>
 
