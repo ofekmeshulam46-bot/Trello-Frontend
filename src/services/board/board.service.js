@@ -21,6 +21,7 @@ export const boardService = {
   getDefaultFilter,
   getEmptyGroup,
   saveTask,
+  addActivity,
 }
 
 
@@ -111,6 +112,14 @@ async function saveTask(boardId, groupId, taskId, changes) {
       : task
   )
   return await save(board)
+}
+
+async function addActivity(boardId, activity) {
+    const board = await getById(boardId)
+
+    board.activities = [activity, ...(board.activities || [])]
+
+    return await save(board)
 }
 
 

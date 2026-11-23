@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import { saveTask } from "../store/actions/board.actions.js"
+import { saveTask, addActivity } from "../store/actions/board.actions.js"
 
 export function TaskDetails() {
     const [description, setDescription] = useState('')
@@ -72,18 +72,23 @@ export function TaskDetails() {
         ev.preventDefault()
         const text = comment.trim()
         if (!text) return
-        const newComment = {
-            id: `comment-${Date.now()}`,
-            title: text,
+        const activity = {
+            id: `a-${Date.now()}`,
+            txt: text,
             createdAt: Date.now(),
-            byMember: loggedInUser ? {
-                _id: loggedInUser._id,
-                fullname: loggedInUser.fullname,
-                imgUrl: loggedInUser.imgUrl,
-            } : { fullname: 'You' },
+            byMember: loggedInUser,
+            group: { id: group.id, title: group.title },
+            task: { id: task.id, title: task.title }
         }
-        if (await onSaveField('comments', [...comments, newComment])) setComment('')
+
+        await addActivity(boardId, activity)
+        setComment('')
     }
+
+    const activityItems = [
+        ...comments.map(item => ({ ...item, txt: item.title })),
+        ...activities
+    ].sort((a, b) => b.createdAt - a.createdAt)
 
     function formatDate(date) {
         if (!date) return ''
@@ -255,30 +260,24 @@ export function TaskDetails() {
                     </form>
 
                     <div className="task-activity-list">
-                        {comments.map(item => (
+                        {activityItems.map(item => (
                             <article className="task-activity-entry" key={item.id}>
                                 <span className="task-activity-avatar">
                                     {item.byMember?.fullname?.charAt(0).toUpperCase() || '?'}
                                 </span>
                                 <div>
-                                    <p><strong>{item.byMember?.fullname || 'A member'}</strong> {item.title}</p>
+                                    <p>
+                                        <strong>{item.byMember?.fullname || 'A member'}</strong> {item.txt}
+                                    </p>
                                     <time>{formatDate(item.createdAt)}</time>
                                 </div>
                             </article>
                         ))}
-                        {activities.map(item => (
-                            <article className="task-activity-entry" key={item.id}>
-                                <span className="task-activity-avatar">
-                                    {item.byMember?.fullname?.charAt(0).toUpperCase() || '?'}
-                                </span>
-                                <div>
-                                    <p><strong>{item.byMember?.fullname || 'A member'}</strong> {item.title}</p>
-                                    <time>{formatDate(item.createdAt)}</time>
-                                </div>
-                            </article>
-                        ))}
-                        {!comments.length && !activities.length && (
-                            <p className="task-activity-empty">Activity and comments will appear here.</p>
+
+                        {!activityItems.length && (
+                            <p className="task-activity-empty">
+                                Activity and comments will appear here.
+                            </p>
                         )}
                     </div>
                     {saveError && <p className="task-save-error" role="alert">{saveError}</p>}
