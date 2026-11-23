@@ -19,6 +19,7 @@ export function TaskDetails() {
 
     const task = group?.tasks.find(task => task.id === taskId)
     const labels = board?.labels || []
+    const members = board?.members || []
 
     useEffect(() => {
         setDescription(task?.description || '')
@@ -39,14 +40,15 @@ export function TaskDetails() {
         await saveTask(boardId, group.id, updatedTask)
     }
 
-    function onToggleLabel(labelId) {
-    const labelIds = task.labelIds || []
 
-    const updatedLabelIds = labelIds.includes(labelId)
-        ? labelIds.filter(id => id !== labelId)
-        : [...labelIds, labelId]
+    function onToggleItem(field, itemId) {
+    const currentIds = task[field] || []
 
-    onSaveField('labelIds', updatedLabelIds)
+    const updatedIds = currentIds.includes(itemId)
+        ? currentIds.filter(id => id !== itemId)
+        : [...currentIds, itemId]
+
+    onSaveField(field, updatedIds)
 }
 
     return <div className="modal-overlay">
@@ -63,9 +65,20 @@ export function TaskDetails() {
                     <input
                         type="checkbox"
                         checked={task?.labelIds?.includes(label.id) || false}
-                        onChange={() => onToggleLabel(label.id)}
+                        onChange={() => onToggleItem('labelIds', label.id)}
                     />
                     {label.title}
+                </label>
+            ))}
+
+            {members.map(member => (
+                <label key={member._id}>
+                    <input
+                        type="checkbox"
+                        checked={task?.memberIds?.includes(member._id) || false}
+                        onChange={() => onToggleItem('memberIds', member._id)}
+                    />
+                    {member.fullname}
                 </label>
             ))}
 
