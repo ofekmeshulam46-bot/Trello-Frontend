@@ -52,6 +52,18 @@ export async function saveBoard(board) {
     }
 }
 
+export async function saveTask(boardId, groupId, updatedTask) {
+    try {
+        const savedBoard = await boardService.saveTask(boardId, groupId, updatedTask)
+        store.dispatch(getCmdSetBoard(savedBoard))
+        return savedBoard
+    } catch (err) {
+        console.log('Cannot save task', err)
+        throw err
+    }
+}
+
+
 export async function addGroup(boardId, groupTitle) {
     try {
         const board = await boardService.getById(boardId)

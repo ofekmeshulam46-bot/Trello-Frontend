@@ -20,6 +20,7 @@ export const boardService = {
   getEmptyBoard,
   getDefaultFilter,
   getEmptyGroup,
+  saveTask,
 }
 
 
@@ -85,17 +86,28 @@ function getEmptyBoard() {
   }
 }
 
-export function getEmptyGroup() {
+function getEmptyGroup() {
   return {
     id: makeId(),
     title: '',
     archivedAt: '',
     tasks: [],
     style: {},
-  } 
+  }
 }
 
+async function saveTask(boardId, groupId, updatedTask) {
+  const board = await getById(boardId)
 
+  const group = board.groups.find(group => group.id === groupId)
+  if (!group) throw new Error('Group not found')
+
+  const taskIdx = group.tasks.findIndex(task => task.id === updatedTask.id)
+  if (taskIdx === -1) throw new Error('Task not found')
+
+  group.tasks[taskIdx] = updatedTask
+  return await save(board)
+}
 
 
 function _createBoards() {
