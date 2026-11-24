@@ -3,19 +3,19 @@ import { TaskDescriptionEditor } from "./TaskDescriptionEditor.jsx"
 
 export function TaskDescription({ savedDescription = '', onSaveDescription }) {
     const [isExpanded, setIsExpanded] = useState(true)
-    const [view, setView] = useState('open')
+    const [isEditing, setIsEditing] = useState(false)
 
     async function onSave(text) {
         const saved = await onSaveDescription(text)
-        if (saved) setView('open')
+        if (saved) setIsEditing(false)
         return saved
     }
 
     function onCancel() {
-        setView('open')
+        setIsEditing(false)
     }
 
-    return <section className="task-details-section">
+    return <section className="task-description-section">
         <h2 className="task-description-heading">
             <button
                 className="task-description-toggle"
@@ -37,7 +37,7 @@ export function TaskDescription({ savedDescription = '', onSaveDescription }) {
             Description
         </h2>
         <div className="task-description-content" hidden={!isExpanded}>
-            {view === 'editing' ? (
+            {isEditing ? (
                 <TaskDescriptionEditor
                     description={savedDescription}
                     onSave={onSave}
@@ -48,7 +48,7 @@ export function TaskDescription({ savedDescription = '', onSaveDescription }) {
                     className={`task-description-display${savedDescription ? '' : ' is-empty'}`}
                     type="button"
                     aria-label="Edit description"
-                    onClick={() => setView('editing')}
+                    onClick={() => setIsEditing(true)}
                 >
                     {savedDescription || 'Add a more detailed description...'}
                 </button>

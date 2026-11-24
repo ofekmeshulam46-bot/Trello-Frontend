@@ -1,0 +1,272 @@
+.task-description-section {
+    margin: 0 0 28px;
+    color: #172b4d;
+}
+
+.task-description-section .task-description-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 16px;
+    color: #172b4d;
+    font-size: 16px;
+    font-weight: 650;
+}
+
+.task-description-toggle {
+    display: grid;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    place-items: center;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: #172b4d;
+    cursor: pointer;
+}
+
+.task-description-toggle:hover,
+.task-description-toggle:active {
+    background: transparent;
+    color: #172b4d;
+}
+
+.task-description-toggle:focus-visible {
+    outline: 2px solid #388bff;
+    outline-offset: 2px;
+}
+
+.task-description-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+}
+
+.task-description-content[hidden] {
+    display: none;
+}
+
+.task-description-display {
+    display: block;
+    width: calc(100% - 34px);
+    min-height: 69px;
+    margin: 0 0 0 34px;
+    border: 1px solid #a6a9ad;
+    border-radius: 5px;
+    background: #fff;
+    padding: 12px;
+    color: #172b4d;
+    font: inherit;
+    text-align: left;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    cursor: text;
+}
+
+.task-description-display:hover {
+    background: #f7f8f9;
+    color: #172b4d;
+}
+
+.task-description-display.is-empty,
+.task-description-display.is-empty:hover {
+    color: #626f86;
+}
+
+.task-description-editor {
+    margin-left: 34px;
+}
+
+.task-description-editor-frame {
+    overflow: hidden;
+    border: 1px solid #a6a9ad;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.task-description-editor-frame:focus-within {
+    border-color: #0c66e4;
+    box-shadow: 0 0 0 1px #0c66e4;
+}
+
+.task-description-tool {
+    display: inline-flex;
+    min-width: 30px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: #44546f;
+    font-size: 17px;
+    white-space: nowrap;
+}
+
+.task-description-text-style {
+    min-width: 54px;
+    justify-content: flex-start;
+    font-size: 18px;
+}
+
+.task-description-bold {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.task-description-italic {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    font-style: italic;
+}
+
+.task-description-color-mark {
+    color: #6554c0;
+    text-shadow: 1px 1px #00b8d9, -1px -1px #ff7452;
+}
+
+.task-description-section .task-description-editor-frame textarea {
+    display: block;
+    width: 100%;
+    min-height: 250px;
+    margin: 0;
+    resize: vertical;
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+    background: #fff;
+    padding: 22px;
+    color: #172b4d;
+    font: inherit;
+    line-height: 1.65;
+}
+
+.task-description-section .task-description-editor-frame textarea:focus {
+    border: 0;
+    outline: 0;
+}
+
+.task-description-editor-frame textarea::placeholder {
+    color: #626f86;
+    opacity: 1;
+}
+
+.task-description-editor-actions,
+.task-description-editor-actions-main {
+    display: flex;
+    align-items: center;
+}
+
+.task-description-editor-actions {
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.task-description-editor-actions-main {
+    gap: 8px;
+}
+
+.task-description-editor-actions button,
+.task-description-format-help summary {
+    margin: 0;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.task-description-editor-actions .task-description-save {
+    background: #0c66e4;
+    color: #fff;
+    font-weight: 600;
+}
+
+.task-description-editor-actions .task-description-save:hover:not(:disabled) {
+    background: #0055cc;
+}
+
+.task-description-editor-actions .task-description-cancel {
+    background: transparent;
+    color: #44546f;
+}
+
+.task-description-editor-actions .task-description-cancel:hover:not(:disabled) {
+    background: #f1f2f4;
+}
+
+.task-description-editor-actions button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.task-description-format-help {
+    position: relative;
+}
+
+.task-description-format-help summary {
+    border: 1px solid #dfe1e6;
+    color: #44546f;
+    list-style: none;
+}
+
+.task-description-format-help summary::-webkit-details-marker {
+    display: none;
+}
+
+.task-description-format-help summary:hover {
+    background: #f1f2f4;
+}
+
+.task-description-format-help > div {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    bottom: calc(100% + 8px);
+    width: 230px;
+    border: 1px solid #dfe1e6;
+    border-radius: 8px;
+    background: #fff;
+    padding: 12px;
+    box-shadow: 0 4px 12px #091e4226;
+    color: #172b4d;
+    font-size: 13px;
+}
+
+.task-description-format-help p {
+    margin: 8px 0 0;
+}
+
+.task-description-format-help code {
+    border-radius: 3px;
+    background: #f1f2f4;
+    padding: 2px 4px;
+}
+
+@media (max-width: 760px) {
+    .task-description-editor,
+    .task-description-display {
+        width: 100%;
+        margin-left: 0;
+    }
+
+
+    .task-description-tool {
+        min-width: 25px;
+        font-size: 15px;
+    }
+
+    .task-description-text-style {
+        min-width: 42px;
+    }
+
+    .task-description-section .task-description-editor-frame textarea {
+        min-height: 200px;
+        padding: 16px;
+    }
+}
