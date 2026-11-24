@@ -24,10 +24,20 @@ export function boardReducer(state = initialState, action = {}) {
     case ADD_BOARD:
       return { ...state, boards: [...state.boards, action.board] }
     case EDIT_BOARD: {
-      const boards = state.boards.map(board =>
+    const boards = state.boards.map(board =>
         board._id === action.board._id ? action.board : board)
-      return { ...state, boards }
+
+    const updatedBoard =
+        state.board?._id === action.board._id
+            ? action.board
+            : state.board
+
+    return {
+        ...state,
+        boards,
+        board: updatedBoard
     }
+}
     case ADD_BOARD_MSG:
       if (action.msg && state.board) {
         return {
