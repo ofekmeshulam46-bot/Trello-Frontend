@@ -3,7 +3,7 @@
     min-height: 100vh;
 }
 
-.board-page > main.board-page-main {
+.board-page>main.board-page-main {
     min-height: 0;
     width: 100%;
 }
@@ -170,7 +170,7 @@
         padding: 0;
     }
 
-    & .group-list > li {
+    & .group-list>li {
         width: 272px;
         flex: 0 0 272px;
     }
@@ -361,6 +361,80 @@
     & .board-bottom-nav .selected {
         background: #e9f2ff;
         color: #0c66e4;
+
+
+    }
+
+     & .board-share-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto;
+    }
+
+    & .board-share-popover {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        z-index: 100;
+        width: 280px;
+        box-sizing: border-box;
+        padding: 16px;
+        background: #fff;
+        color: #172b4d;
+        border-radius: 8px;
+        box-shadow: 0 8px 24px #091e4240;
+    }
+
+    & .board-share-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+
+    & .board-share-header h3 {
+        margin: 0;
+        color: #172b4d;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    & .board-share-header button {
+        width: 28px;
+        height: 28px;
+        border: 0;
+        background: transparent;
+        color: #44546f;
+        font-size: 20px;
+    }
+
+    & .board-share-members {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    & .board-share-member {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: #172b4d;
+    }
+
+    & .board-share-avatar {
+        display: flex;
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #0c66e4;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
     }
 }
 
