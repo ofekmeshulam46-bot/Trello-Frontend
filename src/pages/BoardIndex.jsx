@@ -134,7 +134,7 @@ export function BoardIndex() {
               onAddBoard={onAddBoard}
               onToggleStar={onToggleStar}
               showCreateBoard={false}
-              showBoardActions={false}
+              showBoardActions={true}
               listClassName="board-section-list"
             />
           </section>
