@@ -1,3 +1,4 @@
+import {makeId} from '../../services/util.service.js'
 import { boardService } from '../../services/board/board.service.local.js'
 import { store } from '../store'
 import {
@@ -24,6 +25,35 @@ export async function loadBoard(boardId) {
         store.dispatch(getCmdSetBoard(board))
     } catch (err) {
         console.log('Cannot load board', err)
+        throw err
+    }
+}
+
+export async function updateGroup(boardId, groupId, newTitle) {
+    try {
+        const title = newTitle.trim()
+        if (!title) return
+
+        const board = await boardService.getById(boardId)
+        if (!board) throw new Error('Board not found')
+
+        const updatedGroups = board.groups.map(group =>
+            group.id === groupId
+                ? { ...group, title }
+                : group
+        )
+
+        const updatedBoard = {
+            ...board,
+            groups: updatedGroups
+        }
+
+        const savedBoard = await boardService.save(updatedBoard)
+        store.dispatch(getCmdSetBoard(savedBoard))
+
+        return savedBoard
+    } catch (err) {
+        console.error('Cannot update group:', err)
         throw err
     }
 }
@@ -74,6 +104,89 @@ export async function addActivity(boardId, activity) {
     }
 }
 
+export async function addTask(boardId, groupId, taskTitle) {
+    try {
+        const title = taskTitle.trim()
+        if (!title) return
+
+        const board = await boardService.getById(boardId)
+
+        if (!board) throw new Error('Board not found')
+
+        const groupExists = board.groups.some(
+            group => group.id === groupId
+        )
+
+        if (!groupExists) throw new Error('Group not found')
+
+        const newTask = {
+            id: makeId(),
+            title,
+            description: '',
+            labelIds: [],
+            memberIds: [],
+            comments: [],
+            checklists: [],
+            dueDate: '',
+            style: {}
+        }
+
+        const updatedGroups = board.groups.map(group => {
+            if (group.id !== groupId) return group
+
+            return {
+                ...group,
+                tasks: [...(group.tasks || []), newTask]
+            }
+        })
+
+        const updatedBoard = {
+            ...board,
+            groups: updatedGroups
+        }
+
+        const savedBoard = await boardService.save(updatedBoard)
+
+        store.dispatch(getCmdSetBoard(savedBoard))
+
+        return newTask
+
+    } catch (err) {
+        console.error('Cannot add task:', err)
+        throw err
+    }
+}
+
+export async function removeTask(boardId, groupId, taskId) {
+    try {
+        const board = await boardService.getById(boardId)
+
+        if (!board) throw new Error('Board not found')
+
+        const updatedGroups = board.groups.map(group => {
+            if (group.id !== groupId) return group
+
+            return {
+                ...group,
+                tasks: group.tasks.filter(task => task.id !== taskId)
+            }
+        })
+
+        const updatedBoard = {
+            ...board,
+            groups: updatedGroups
+        }
+
+        const savedBoard = await boardService.save(updatedBoard)
+
+        store.dispatch(getCmdSetBoard(savedBoard))
+
+        return savedBoard
+    } catch (err) {
+        console.error('Cannot remove task:', err)
+        throw err
+    }
+}
 
 export async function addGroup(boardId, groupTitle) {
     try {

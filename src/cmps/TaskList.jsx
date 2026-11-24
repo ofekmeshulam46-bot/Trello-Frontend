@@ -1,6 +1,6 @@
 import { TaskPreview } from "./TaskPreview.jsx"
 
-export function TaskList({ tasks, labels = [] ,boardId }) {
+export function TaskList({ tasks, labels = [] ,boardId, groupId }) {
 
     return <section className="group-cards">
         <ul className="task-list">
@@ -9,7 +9,8 @@ export function TaskList({ tasks, labels = [] ,boardId }) {
                     <TaskPreview 
                     task={task} 
                     labels={labels}
-                    boardId={boardId} />
+                    boardId={boardId}
+                    groupId={groupId} />
                 </li>
             )}
         </ul>
