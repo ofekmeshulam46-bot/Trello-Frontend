@@ -35,6 +35,11 @@
 @import "cmps/board/BoardDetails.css";
 
 @import "cmps/board/TaskDetails.css";
+@import "cmps/board/TaskAttributePickers.css";
+@import "cmps/board/TaskMembers.css";
+@import "cmps/board/TaskLabels.css";
+@import "cmps/board/TaskDates.css";
+@import "cmps/board/TaskCheckList.css";
 @import "cmps/board/TaskDescription.css";
 
 

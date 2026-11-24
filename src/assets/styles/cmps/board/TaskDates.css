@@ -1,0 +1,60 @@
+.task-dates-field {
+    flex: 0 0 100%;
+}
+
+.task-date-popover {
+    grid-template-columns: 1fr;
+}
+
+.task-date-popover label {
+    padding: 4px 6px;
+    color: #44546f;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.task-due-date-input {
+    min-height: 34px;
+    border: 1px solid #dfe1e6;
+    border-radius: 5px;
+    background: #fff;
+    padding: 5px 8px;
+    color: #172b4d;
+    font: inherit;
+}
+
+.task-due-date-button {
+    display: inline-flex;
+    min-height: 36px;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    border: 1px solid #dfe1e6;
+    border-radius: 6px;
+    background: #fff;
+    padding: 5px 10px;
+    color: #44546f;
+    font: inherit;
+}
+
+.task-due-date-button:hover {
+    background: #f1f2f4;
+}
+
+.task-due-date-overdue {
+    border-radius: 3px;
+    background: #ffebe6;
+    padding: 2px 5px;
+    color: #ae2e24;
+    font-size: 12px;
+}
+
+.task-due-date-chevron {
+    color: #44546f;
+    font-size: 16px;
+}
+
+.task-date-picker {
+    display: flex;
+    flex-direction: column;
+}
