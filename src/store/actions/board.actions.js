@@ -1,4 +1,4 @@
-import { boardService } from '../../services/board/board.service.js'
+import { boardService } from '../../services/board/board.service.local.js'
 import { store } from '../store'
 import {
     ADD_BOARD,

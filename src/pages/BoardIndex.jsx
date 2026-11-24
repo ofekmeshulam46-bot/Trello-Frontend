@@ -16,7 +16,7 @@ import {
 } from '../assets/icons/board-icons.jsx'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-import { boardService } from '../services/board/board.service.js'
+import { boardService } from '../services/board/board.service.local.js'
 import {
     loadBoards,
     removeBoard,
