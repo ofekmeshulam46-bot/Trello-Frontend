@@ -39,15 +39,17 @@ export function BoardList({
         </li>
       ))}
       {showCreateBoard && (
-        <li>
-          <button
-            className="create-board-card"
-            type="button"
-            onClick={onAddBoard}
-          >
-            Create new board
-          </button>
-        </li>
+        <button
+          className="create-board-card"
+          type="button"
+          onClick={onAddBoard}
+          style={{
+            gridColumn: 1,
+            gridRow: Math.floor(boards.length / 4) + 1,
+          }}
+        >
+          Create new board
+        </button>
       )}
     </ul>
   )

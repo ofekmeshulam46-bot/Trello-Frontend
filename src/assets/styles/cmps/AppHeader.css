@@ -1,9 +1,11 @@
 .app-header {
     display: flex;
-    min-height: 3.5rem;
+    height: 48px;
+    box-sizing: border-box;
+    align-items: center;
 
     background-color: var(--clr4);
-    padding: .8rem 1rem;
+    padding: 0 1rem;
     
     & nav {
         display: flex;

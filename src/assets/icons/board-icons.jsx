@@ -60,7 +60,14 @@ export const SettingsIcon = (
 )
 
 export const StarIcon = (
-    <svg className="board-star-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="m12 3 2.78 5.63 6.22.9-4.5 4.39 1.06 6.19L12 17.18l-5.56 2.93 1.06-6.19L3 9.53l6.22-.9L12 3Z" />
+    </svg>
+)
+
+export const StarWithCoverIcon = (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+        <rect x="0" y="0" width="16" height="16" rx="2" />
+        <path d="m8 3.25 1.35 2.74 3.02.44-2.19 2.13.52 3.01L8 10.21l-2.7 1.36.52-3.01-2.19-2.13 3.02-.44L8 3.25Z" />
     </svg>
 )

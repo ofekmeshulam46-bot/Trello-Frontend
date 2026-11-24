@@ -2,26 +2,28 @@
     display: grid;
     grid-template-columns: 320px minmax(0, 1fr);
 
-    min-height: calc(100vh - 7.5rem);
+    height: calc(100vh - 48px);
+    min-height: calc(100vh - 48px);
     width: 100%;
     background: var(--board-surface);
 
     & .board-sidebar {
-        min-height: calc(100vh - 7.5rem);
+        height: 100%;
 
-        border-inline-end: 1px solid var(--board-border);
+        border-inline-end: 0;
         background: var(--board-surface);
         color: var(--board-text);
     }
 
     & .sidebar-brand {
-        position: relative;
-        display: flex;
-        height: 68px;
+        display: grid;
+        grid-template-columns: 26px minmax(0, 1fr) 34px;
+        column-gap: 7px;
+        height: 48px;
         align-items: center;
 
         border-block-end: 1px solid var(--board-border);
-        padding-inline: 8px;
+        padding-inline: 16px;
     }
 
     & .sidebar-switcher {
@@ -34,7 +36,7 @@
         background: transparent;
         color: var(--board-text);
         cursor: pointer;
-
+        justify-self: end;
     }
 
     & .sidebar-switcher-icon {
@@ -48,7 +50,6 @@
         display: grid;
         width: 26px;
         height: 26px;
-        margin-inline-end: 7px;
         place-items: center;
 
         color: var(--board-surface);
@@ -73,20 +74,22 @@
         display: grid;
         gap: 1px;
 
-        padding: 17px 8px 14px;
+        padding: 8px 16px;
         border-block-end: 1px solid var(--board-border);
     }
 
     & .sidebar-nav-item {
         display: flex;
-        height: 40px;
+        width: 100%;
+        height: 36px;
+        box-sizing: border-box;
         align-items: center;
-        gap: 16px;
+        gap: 12px;
 
         border: 0;
         border-radius: 3px;
         background: transparent;
-        padding-inline: 27px;
+        padding-inline: 12px;
         color: var(--board-text);
         font: inherit;
         font-size: 15px;
@@ -113,11 +116,11 @@
     }
 
     & .sidebar-workspaces {
-        padding: 16px 8px;
+        padding: 16px;
 
         & h4 {
             margin: 0 0 8px;
-            padding-inline: 30px;
+            padding-inline: 12px;
 
             color: var(--board-muted-text);
             font-size: 13px;
@@ -128,14 +131,15 @@
     & .sidebar-workspace {
         display: flex;
         width: 100%;
-        height: 46px;
+        height: 36px;
+        box-sizing: border-box;
         align-items: center;
         gap: 10px;
 
         border: 0;
         border-radius: 3px;
         background: transparent;
-        padding-inline: 30px;
+        padding-inline: 12px;
         color: var(--board-text);
         font: inherit;
         font-size: 15px;
@@ -172,14 +176,15 @@
     }
 
     & .sidebar-workspace-logo {
-        width: 32px;
-        height: 32px;
+        width: 24px;
+        height: 24px;
         font-size: 17px;
     }
 
     & .board-main {
         width: 100%;
-        padding: 30px 35px;
+        max-width: 1044px;
+        padding: 48px 32px 64px 100px;
     }
 
     & .workspace-title,
@@ -256,7 +261,7 @@
         --min-column-size: 180px;
 
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(var(--min-column-size), 1fr));
+        grid-template-columns: repeat(4, 180px);
         gap: 12px;
         margin: 0;
         padding: 0;
@@ -285,22 +290,23 @@
         place-items: center;
     }
 
-    & .board-section-icon .board-star-icon {
-        width: 18px;
-        height: 18px;
-        fill: none;
+    & .board-section-icon > svg {
+        width: 16px;
+        height: 16px;
+        fill: transparent;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.8;
     }
 
     & .board-section-list {
-        --min-column-size: 220px;
-
-        grid-template-columns: repeat(auto-fill, minmax(var(--min-column-size), 220px));
+        grid-template-columns: repeat(4, 180px);
     }
 
     & .board-card,
     & .create-board-card {
-        position: relative;
-        height: 112px;
+        height: 96px;
 
         border: 1px solid var(--board-border);
         border-radius: 6px;
@@ -308,21 +314,40 @@
         background: var(--board-surface);
     }
 
+    & .board-card {
+        display: grid;
+        grid-template-rows: 64px 32px;
+        grid-template-columns: minmax(0, 1fr);
+        container-type: inline-size;
+    }
+
     & .board-preview {
-        position: relative;
+        grid-area: 1 / 1 / 3 / 2;
+        display: grid;
+        grid-template-rows: 64px 32px;
+        grid-template-columns: minmax(0, 1fr);
         height: 100%;
     }
 
     & .board-preview-link {
-        display: block;
+        grid-area: 1 / 1 / 3 / 2;
+        display: grid;
+        grid-template-rows: 64px 32px;
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
         height: 100%;
         color: inherit;
+        text-decoration: none;
         cursor: pointer;
     }
 
+    & .board-preview-link:hover {
+        text-decoration: none;
+    }
+
     & .board-cover {
-        position: relative;
-        height: 72px;
+        width: 100%;
+        height: 64px;
         background: linear-gradient(135deg, var(--clr3), var(--clr1));
         background-position: center;
         background-size: cover;
@@ -334,19 +359,21 @@
     }
 
     & .board-star {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        z-index: 1;
+        grid-area: 1 / 1 / 2 / 2;
+        align-self: start;
+        justify-self: end;
+        z-index: 5;
+        margin: 0;
 
         display: grid;
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
         place-items: center;
+        box-sizing: border-box;
 
         border: 0;
-        border-radius: 3px;
-        background: rgba(9, 30, 66, 0.42);
+        padding: 0;
+        background: transparent;
         color: #fff;
         opacity: 0;
         cursor: pointer;
@@ -357,14 +384,20 @@
         }
     }
 
-    & .board-star-icon {
+    & .board-star > svg {
         width: 16px;
         height: 16px;
+        display: block;
         fill: transparent;
         stroke: currentColor;
         stroke-linecap: round;
         stroke-linejoin: round;
         stroke-width: 1.8;
+    }
+
+    & .board-star > svg rect {
+        fill: rgba(9, 30, 66, 0.42);
+        stroke: none;
     }
 
     & .board-card:hover .board-star,
@@ -373,8 +406,12 @@
         opacity: 1;
     }
 
-    & .board-star.starred .board-star-icon {
+    & .board-star.starred > svg path {
         fill: #fff;
+    }
+
+    & .board-star.starred > svg rect {
+        fill: rgba(9, 30, 66, 0.42);
     }
 
     & .board-card:first-child .board-cover {
@@ -383,18 +420,24 @@
 
     & .board-name {
         display: flex;
-        height: 38px;
+        height: 32px;
         align-items: center;
+        box-sizing: border-box;
 
         margin: 0;
         padding-inline: 8px;
         color: var(--board-text);
-        font-size: 14px;
+        font-size: clamp(8px, 7cqi, 14px);
+        line-height: 1.25;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     & .create-board-card {
         display: grid;
         width: 100%;
+        margin: 0;
         place-items: center;
 
         color: var(--board-muted-text);
@@ -409,8 +452,9 @@
 
     & .board-edit,
     & .board-remove {
-        position: absolute;
-        bottom: 7px;
+        grid-area: 1 / 1 / 2 / 2;
+        align-self: start;
+        z-index: 3;
         display: none;
 
         border: 0;
@@ -422,11 +466,13 @@
     }
 
     & .board-edit {
-        right: 32px;
+        justify-self: start;
+        margin: 4px 0 0 4px;
     }
 
     & .board-remove {
-        right: 7px;
+        justify-self: start;
+        margin: 4px 0 0 36px;
     }
 
     & .board-card:hover .board-edit,
