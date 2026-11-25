@@ -22,7 +22,7 @@ export function BoardList({
           <li className="board-card" key={board._id}>
           <BoardPreview board={board} onToggleStar={onToggleStar} />
           {showBoardActions && (
-            <>
+            <div className="board-actions">
               <button
                 className="board-edit"
                 type="button"
@@ -39,7 +39,7 @@ export function BoardList({
               >
                 x
               </button>
-            </>
+            </div>
           )}
           {boardToEdit && boardToEdit._id === board._id && (
             <BoardEdit
