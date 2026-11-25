@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { BoardList } from '../cmps/BoardList.jsx'
-import { BoardEdit } from '../cmps/BoardEdit.jsx'
 import {
     AppSwitcherIcon,
     BoardsIcon,
@@ -25,7 +24,9 @@ import {
 
 export function BoardIndex() {
   const boards = useSelector((storeState) => storeState.boardModule.boards)
-  const [boardToEdit, setBoardToEdit] = useState(null)
+  const [createBoardToEdit, setCreateBoardToEdit] = useState(null)
+  const [starredBoardToEdit, setStarredBoardToEdit] = useState(null)
+  const [workspaceBoardToEdit, setWorkspaceBoardToEdit] = useState(null)
   const starredBoards = boards.filter((board) => board.isStarred === true)
 
   useEffect(() => {
@@ -43,11 +44,21 @@ export function BoardIndex() {
   }
 
   function onAddBoard() {
-    setBoardToEdit(boardService.getEmptyBoard())
+    setStarredBoardToEdit(null)
+    setWorkspaceBoardToEdit(null)
+    setCreateBoardToEdit(boardService.getEmptyBoard())
   }
 
-  function onEditBoard(board) {
-    setBoardToEdit(structuredClone(board))
+  function onEditBoard(board, source) {
+    const boardToClone = structuredClone(board)
+    setCreateBoardToEdit(null)
+    if (source === 'starred') {
+      setWorkspaceBoardToEdit(null)
+      setStarredBoardToEdit(boardToClone)
+      return
+    }
+    setStarredBoardToEdit(null)
+    setWorkspaceBoardToEdit(boardToClone)
   }
 
   async function onSaveBoard(board) {
@@ -56,7 +67,9 @@ export function BoardIndex() {
       showSuccessMsg(board._id
         ? `Board name updated to "${savedBoard.title}"`
         : `Board "${savedBoard.title}" was added`)
-      setBoardToEdit(null)
+      setStarredBoardToEdit(null)
+      setWorkspaceBoardToEdit(null)
+      setCreateBoardToEdit(null)
     } catch (err) {
       console.log("Cannot save board", err)
       showErrorMsg("Cannot save board")
@@ -134,8 +147,14 @@ export function BoardIndex() {
               onAddBoard={onAddBoard}
               onToggleStar={onToggleStar}
               showCreateBoard={false}
-              showBoardActions={false}
+              showBoardActions={true}
               listClassName="board-section-list"
+              boardToEdit={starredBoardToEdit}
+              listSource="starred"
+              onSaveBoard={onSaveBoard}
+              onCancelEdit={() => {
+                setStarredBoardToEdit(null)
+              }}
             />
           </section>
         )}
@@ -165,15 +184,15 @@ export function BoardIndex() {
           onEditBoard={onEditBoard}
           onAddBoard={onAddBoard}
           onToggleStar={onToggleStar}
+          boardToEdit={createBoardToEdit || workspaceBoardToEdit}
+          listSource="workspace"
+          onSaveBoard={onSaveBoard}
+          onCancelEdit={() => {
+            setCreateBoardToEdit(null)
+            setWorkspaceBoardToEdit(null)
+          }}
         />
       </main>
-      {boardToEdit && (
-          <BoardEdit
-              boardToEdit={boardToEdit}
-              onSaveBoard={onSaveBoard}
-              onCancelEdit={() => setBoardToEdit(null)}
-          />
-      )}
     </section>
   )
 }

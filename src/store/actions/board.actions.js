@@ -1,6 +1,8 @@
-import {makeId} from '../../services/util.service.js'
+import { makeId } from '../../services/util.service.js'
 import { boardService } from '../../services/board/board.service.local.js'
 import { store } from '../store'
+import { reorderGroups, reorderTasks, moveTaskBetweenGroups } from '../../services/board/board.drag-and-drop.js'
+
 import {
     ADD_BOARD,
     EDIT_BOARD,
@@ -197,7 +199,7 @@ export async function addGroup(boardId, groupTitle) {
 
         const updatedBoard = {
             ...board,
-            groups: [...board.groups, group]
+            groups: [...(board.groups || []), group]
         }
         const savedBoard = await boardService.save(updatedBoard)
         store.dispatch(getCmdSetBoard(savedBoard))
@@ -250,3 +252,107 @@ function getCmdEditBoard(board) {
 function getCmdRemoveBoard(boardId) {
     return { type: REMOVE_BOARD, boardId }
 }
+export async function moveGroup(boardId, draggedGroupId, targetGroupId, position = 'before') {
+    try {
+        const board = await boardService.getById(boardId)
+
+        if (!board) throw new Error('Board not found')
+
+        const updatedGroups = reorderGroups(board.groups, draggedGroupId, targetGroupId, position)
+
+        if (updatedGroups === board.groups) return
+
+        const updatedBoard = {
+            ...board,
+            groups: updatedGroups
+        }
+
+        const savedBoard = await boardService.save(updatedBoard)
+
+        store.dispatch(getCmdSetBoard(savedBoard))
+
+        return savedBoard
+    } catch (err) {
+        console.error('Cannot move group:', err)
+        throw err
+    }
+}
+
+
+export async function moveTask(
+    boardId,
+    groupId,
+    draggedTaskId,
+    targetTaskId,
+    position = 'before'
+) {
+    try {
+        const board = await boardService.getById(boardId)
+
+        if (!board) throw new Error('Board not found')
+
+        const updatedGroups = reorderTasks(
+            board.groups,
+            groupId,
+            draggedTaskId,
+            targetTaskId,
+            position
+        )
+
+        const updatedBoard = {
+            ...board,
+            groups: updatedGroups
+        }
+
+        const savedBoard = await boardService.save(updatedBoard)
+
+        store.dispatch(getCmdSetBoard(savedBoard))
+
+        return savedBoard
+    } catch (err) {
+        console.error('Cannot move task:', err)
+        throw err
+    }
+}
+
+
+export async function transferTask(
+    boardId,
+    sourceGroupId,
+    targetGroupId,
+    taskId,
+    targetTaskId = null
+) {
+    try {
+        const board = await boardService.getById(boardId)
+
+        if (!board) throw new Error('Board not found')
+
+        const updatedGroups = moveTaskBetweenGroups(
+            board.groups,
+            sourceGroupId,
+            targetGroupId,
+            taskId,
+            targetTaskId
+        )
+
+        // Don't save if nothing changed
+        if (updatedGroups === board.groups) return
+
+        const updatedBoard = {
+            ...board,
+            groups: updatedGroups
+        }
+
+        const savedBoard = await boardService.save(updatedBoard)
+
+        store.dispatch(getCmdSetBoard(savedBoard))
+
+        return savedBoard
+
+    } catch (err) {
+        console.error('Cannot transfer task:', err)
+        throw err
+    }
+}
+

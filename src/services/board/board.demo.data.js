@@ -13,7 +13,7 @@ export const demoBoards = [
 			imgUrl: 'https://randomuser.me',
 		},
 		style: {
-			backgroundImage: 'https://unsplash.com',
+			backgroundImage: 'url("https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1920&q=90")',
 		},
 		labels: [
 			{ id: 'l101', title: 'הושלם', color: '#61bd4f' },
@@ -254,7 +254,7 @@ export const demoBoards = [
 			imgUrl: 'https://randomuser.me',
 		},
 		style: {
-			backgroundImage: 'https://unsplash.com',
+			backgroundImage: 'url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=90")',
 		},
 		labels: [
 			{ id: 'l201', title: 'סושיאל', color: '#ff9f1a' },
@@ -367,6 +367,13 @@ export const demoBoards = [
 			imgUrl: 'https://randomuser.me',
 		},
 		style: {
-			backgroundImage: 'https://unsplash.com',
+			backgroundImage: 'url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=90")',
 		},
+		labels: [],
+		members: [
+			{ _id: 'u102', fullname: 'עומר כהן', imgUrl: 'https://randomuser.me' },
+		],
+		groups: [],
+		activities: [],
+		cmpsOrder: ['MemberPicker', 'StatusPicker', 'DatePicker'],
     }]

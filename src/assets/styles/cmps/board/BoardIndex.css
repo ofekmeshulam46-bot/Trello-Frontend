@@ -314,11 +314,23 @@
         background: var(--board-surface);
     }
 
+    & .create-board-wrapper {
+        position: relative;
+        height: 96px;
+    }
+
     & .board-card {
+        position: relative;
         display: grid;
         grid-template-rows: 64px 32px;
         grid-template-columns: minmax(0, 1fr);
         container-type: inline-size;
+        overflow: visible;
+        z-index: 1;
+    }
+
+    & .board-card:has(.board-edit-modal) {
+        z-index: 11;
     }
 
     & .board-preview {
@@ -352,6 +364,42 @@
         background-position: center;
         background-size: cover;
         transition: filter 0.16s ease;
+
+        &.background-photo-1 {
+            background-image: url("https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=400&q=80");
+        }
+
+        &.background-photo-2 {
+            background-image: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80");
+        }
+
+        &.background-photo-3 {
+            background-image: url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=400&q=80");
+        }
+
+        &.background-photo-4 {
+            background-image: url("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80");
+        }
+
+        &.background-gradient-1 {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+        }
+
+        &.background-gradient-2 {
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+        }
+
+        &.background-gradient-3 {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+        }
+
+        &.background-gradient-4 {
+            background: linear-gradient(135deg, #4338ca 0%, #9333ea 100%);
+        }
+
+        &.background-gradient-5 {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+        }
     }
 
     & .board-card:hover .board-cover {

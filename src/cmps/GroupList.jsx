@@ -1,13 +1,145 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { GroupPreview } from './GroupPreview.jsx'
-import { addGroup } from '../store/actions/board.actions.js'
+import { addGroup, moveGroup } from '../store/actions/board.actions.js'
+import PropTypes from 'prop-types'
+
 
 export function GroupList({ groups, labels = [], boardId }) {
     const [isAddingGroup, setIsAddingGroup] = useState(false)
     const [newGroupTitle, setNewGroupTitle] = useState('')
     const addGroupRef = useRef(null)
     const isSavingGroupRef = useRef(false)
+    const [draggingGroupId, setDraggingGroupId] = useState(null)
+
+
+    function onGroupDragStart(ev, groupId) {
+        setDraggingGroupId(groupId)
+
+        ev.dataTransfer.effectAllowed = 'move'
+        ev.dataTransfer.setData('application/x-trello-group', groupId)
+        ev.dataTransfer.setData('text/plain', groupId)
+    }
+
+    function getDraggedGroupId(ev) {
+        return ev.dataTransfer.getData('application/x-trello-group')
+            || ev.dataTransfer.getData('text/plain')
+    }
+
+    function isGroupDrag(ev) {
+        const types = Array.from(ev.dataTransfer.types)
+        return types.includes('application/x-trello-group')
+            || types.includes('text/plain')
+    }
+
+    function onGroupDragOver(ev) {
+        ev.preventDefault()
+        ev.dataTransfer.dropEffect = 'move'
+    }
+
+    async function onGroupDrop(ev, targetGroupId) {
+        if (!isGroupDrag(ev)) return
+
+        ev.preventDefault()
+        ev.stopPropagation()
+
+        const draggedGroupId = getDraggedGroupId(ev)
+
+        if (!draggedGroupId || draggedGroupId === targetGroupId) {
+            setDraggingGroupId(null)
+            return
+        }
+
+        const rect = ev.currentTarget.getBoundingClientRect()
+        const middleX = rect.left + rect.width / 2
+
+        const position = ev.clientX < middleX
+            ? 'before'
+            : 'after'
+
+        try {
+            await moveGroup(
+                boardId,
+                draggedGroupId,
+                targetGroupId,
+                position
+            )
+        } catch (err) {
+            console.error('Failed to move group:', err)
+            alert('Could not move list')
+        } finally {
+            setDraggingGroupId(null)
+        }
+    }
+
+    async function onGroupDropInGap(ev) {
+        if (!isGroupDrag(ev)) return
+
+        ev.preventDefault()
+        ev.stopPropagation()
+
+        const draggedGroupId = getDraggedGroupId(ev)
+
+        if (!groups.some(group => group.id === draggedGroupId)) {
+            setDraggingGroupId(null)
+            return
+        }
+
+        // Get all actual list elements, excluding "Add another list"
+        const groupElements = [
+            ...ev.currentTarget.querySelectorAll(
+                ':scope > li:not(.add-group)'
+            )
+        ]
+
+        // Find the first list whose midpoint is to the right of the cursor
+        const targetIndex = groupElements.findIndex(element => {
+            const rect = element.getBoundingClientRect()
+            const middleX = rect.left + rect.width / 2
+
+            return ev.clientX < middleX
+        })
+
+        try {
+            if (targetIndex === -1) {
+                // Drop after the last list
+                const lastGroup = groups[groups.length - 1]
+
+                if (!lastGroup) return
+
+                await moveGroup(
+                    boardId,
+                    draggedGroupId,
+                    lastGroup.id,
+                    'after'
+                )
+            } else {
+                // Drop before the list at targetIndex
+                await moveGroup(
+                    boardId,
+                    draggedGroupId,
+                    groups[targetIndex].id,
+                    'before'
+                )
+            }
+
+            GroupList.propTypes = {
+                groups: PropTypes.arrayOf(PropTypes.shape({
+                    id: PropTypes.string.isRequired,
+                })).isRequired,
+                labels: PropTypes.array,
+                boardId: PropTypes.string.isRequired,
+            }
+
+
+        } catch (err) {
+            console.error('Failed to move group:', err)
+            alert('Could not move list')
+        } finally {
+            setDraggingGroupId(null)
+        }
+    }
+
 
     useEffect(() => {
         if (!isAddingGroup) return
@@ -15,7 +147,8 @@ export function GroupList({ groups, labels = [], boardId }) {
         function handleOutsideClick(ev) {
             if (
                 addGroupRef.current &&
-                !addGroupRef.current.contains(ev.target)
+                !addGroupRef.current.contains(ev.target) &&
+                !ev.target.closest('.add-group')
             ) {
                 onCancelAddGroup()
             }
@@ -58,13 +191,51 @@ export function GroupList({ groups, labels = [], boardId }) {
 
     return (
         <section className="board-groups">
-            <ul className="group-list">
+
+            <ul
+                className="group-list"
+                onDragOver={ev => {
+                    if (!isGroupDrag(ev)) return
+
+                    const listItem = ev.target.closest('.group-list > li')
+
+                    // Existing lists handle their own drag-over events
+                    if (listItem && !listItem.classList.contains('add-group')) {
+                        return
+                    }
+
+                    ev.preventDefault()
+                    ev.dataTransfer.dropEffect = 'move'
+                }}
+                onDrop={ev => {
+                    const listItem = ev.target.closest('.group-list > li')
+
+                    if (listItem && !listItem.classList.contains('add-group')) {
+                        return
+                    }
+
+                    onGroupDropInGap(ev)
+                }}
+            >
+
                 {groups.map(group => (
-                    <li key={group.id}>
+                    <li
+                        key={group.id}
+                        data-group-id={group.id}
+                        className={
+                            draggingGroupId === group.id
+                                ? 'group-dragging'
+                                : ''
+                        }
+                        onDragOver={onGroupDragOver}
+                        onDrop={ev => onGroupDrop(ev, group.id)}
+                        onDragEnd={() => setDraggingGroupId(null)}
+                    >
                         <GroupPreview
                             group={group}
                             labels={labels}
                             boardId={boardId}
+                            onGroupDragStart={onGroupDragStart}
                         />
                     </li>
                 ))}

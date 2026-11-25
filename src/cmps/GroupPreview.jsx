@@ -1,8 +1,9 @@
 import { TaskList } from "./TaskList.jsx"
 import { removeGroup, addTask, updateGroup } from "../store/actions/board.actions.js"
 import { useState, useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
-export function GroupPreview({ group, labels = [], boardId }) {
+export function GroupPreview({ group, labels = [], boardId, onGroupDragStart }) {
 
     const tasks = group.tasks
     const [isEditing, setIsEditing] = useState(false)
@@ -93,22 +94,42 @@ export function GroupPreview({ group, labels = [], boardId }) {
     }
 
     async function onRemoveGroup() {
-    const confirmed = window.confirm(
-        `Are you sure you want to delete "${group.title}" and all ${group.tasks?.length || 0} cards inside it?`
-    )
+        const confirmed = window.confirm(
+            `Are you sure you want to delete "${group.title}" and all ${group.tasks?.length || 0} cards inside it?`
+        )
 
-    if (!confirmed) return
+        if (!confirmed) return
 
-    try {
-        await removeGroup(boardId, group.id)
-    } catch (err) {
-        console.error('Failed to delete group:', err)
-        alert('Could not delete the list. Please try again.')
+        try {
+            await removeGroup(boardId, group.id)
+        } catch (err) {
+            console.error('Failed to delete group:', err)
+            alert('Could not delete the list. Please try again.')
+        }
     }
-}
 
-    return <article className="group-preview">
+    return <article
+        className="group-preview"
+        draggable="true"
+        onDragStart={ev => {
+            if (ev.target.closest(
+                '.task-list, .task-card, button, input, textarea, a, form'
+            )) {
+                ev.preventDefault()
+                return
+            }
+            ev.stopPropagation()
+            onGroupDragStart(ev, group.id)
+        }}
+    >
         <header className="group-header">
+            <span
+                className="group-drag-handle"
+                title="Drag to move list"
+                aria-label="Drag to move list"
+            >
+                ⠿
+            </span>
             {isEditing ? (
                 <input
                     type="text"
@@ -217,4 +238,15 @@ export function GroupPreview({ group, labels = [], boardId }) {
         )}
         {/* <pre>{JSON.stringify(group, null, 2)}</pre> */}
     </article>
+}
+
+GroupPreview.propTypes = {
+    group: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        tasks: PropTypes.array,
+    }).isRequired,
+    labels: PropTypes.array,
+    boardId: PropTypes.string.isRequired,
+    onGroupDragStart: PropTypes.func.isRequired,
 }

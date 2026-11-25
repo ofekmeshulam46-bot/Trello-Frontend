@@ -21,6 +21,50 @@
     color: #172b4d;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
+    &.background-photo-1 {
+        background-image: url("https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1920&q=90");
+        background-size: cover;
+        background-position: center;
+    }
+
+    &.background-photo-2 {
+        background-image: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=90");
+        background-size: cover;
+        background-position: center;
+    }
+
+    &.background-photo-3 {
+        background-image: url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=90");
+        background-size: cover;
+        background-position: center;
+    }
+
+    &.background-photo-4 {
+        background-image: url("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1920&q=90");
+        background-size: cover;
+        background-position: center;
+    }
+
+    &.background-gradient-1 {
+        background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    }
+
+    &.background-gradient-2 {
+        background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+    }
+
+    &.background-gradient-3 {
+        background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+    }
+
+    &.background-gradient-4 {
+        background: linear-gradient(135deg, #4338ca 0%, #9333ea 100%);
+    }
+
+    &.background-gradient-5 {
+        background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    }
+
     & button {
         font: inherit;
         cursor: pointer;
@@ -172,6 +216,12 @@
 
     & .group-list>li {
         width: 272px;
+        flex: 0 0 272px;
+    }
+
+    & .group-list > .add-group {
+        width: 272px;
+        min-width: 272px;
         flex: 0 0 272px;
     }
 
@@ -341,6 +391,26 @@
         background: #ffffff50;
     }
 
+    & .add-group-actions .add-group-submit,
+    & .add-group-actions .add-group-submit:disabled,
+    & .add-group-actions .add-group-submit:hover {
+        display: inline-flex;
+        min-height: 32px;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    & .add-group-actions .add-group-submit {
+        background: #0c66e4;
+        color: #fff;
+    }
+
+    & .add-group-actions .add-group-submit:hover {
+        background: #0055cc;
+    }
+
     & .board-bottom-nav {
         position: fixed;
         z-index: 1;
@@ -369,8 +439,6 @@
     & .board-bottom-nav .selected {
         background: #e9f2ff;
         color: #0c66e4;
-
-
     }
 
     & .board-share-container {
@@ -477,10 +545,6 @@
             max-height: calc(100vh - 160px);
         }
 
-        & .board-bottom-nav span {
-            padding-inline: 6px;
-            font-size: 11px;
-        }
     }
 }
 
@@ -652,4 +716,97 @@
 
 .board-details .add-group-actions .add-group-cancel:hover {
     background: #091e4214;
+}
+
+
+/* Group Drag Handle */
+
+.board-details .group-drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    color: #626f86;
+    font-size: 20px;
+    cursor: grab;
+    user-select: none;
+}
+
+.board-details .group-drag-handle:hover {
+    background: #091e4214;
+    color: #172b4d;
+}
+
+.board-details .group-drag-handle:active {
+    cursor: grabbing;
+}
+
+/* Allow dropping cards into empty lists */
+
+.board-details .group-cards {
+    min-height: 32px;
+}
+
+.board-details .task-list {
+    min-height: 24px;
+}
+
+
+/* Card Drag & Drop Indicators */
+
+.board-details .task-list > li {
+    position: relative;
+}
+
+.board-details .task-list > li.drop-before::before,
+.board-details .task-list > li.drop-after::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    height: 3px;
+    border-radius: 3px;
+    background: #0c66e4;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.board-details .task-list > li.drop-before::before {
+    top: 0;
+    z-index: 20;
+}
+
+.board-details .task-list > li.drop-after::after {
+    bottom: -6px;
+}
+
+.board-details .group-cards.drop-empty {
+    min-height: 40px;
+    border-radius: 6px;
+    outline: 2px dashed #0c66e4;
+    outline-offset: -2px;
+    background: #e9f2ff;
+}
+
+/* Appearance while dragging a task */
+
+.board-details .task-list > li.task-dragging {
+    opacity: 0.4;
+}
+
+.board-details .task-list > li[draggable="true"] {
+    cursor: grab;
+}
+
+.board-details .task-list > li.task-dragging {
+    cursor: grabbing;
+}
+
+/* Appearance while dragging an entire list */
+
+.board-details .group-list > li.group-dragging {
+    opacity: 0.4;
 }
