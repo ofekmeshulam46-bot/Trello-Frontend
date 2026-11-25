@@ -22,25 +22,25 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
     &.background-photo-1 {
-        background-image: url("https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1400&q=80");
+        background-image: url("https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1920&q=90");
         background-size: cover;
         background-position: center;
     }
 
     &.background-photo-2 {
-        background-image: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80");
+        background-image: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=90");
         background-size: cover;
         background-position: center;
     }
 
     &.background-photo-3 {
-        background-image: url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=80");
+        background-image: url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=90");
         background-size: cover;
         background-position: center;
     }
 
     &.background-photo-4 {
-        background-image: url("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1400&q=80");
+        background-image: url("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1920&q=90");
         background-size: cover;
         background-position: center;
     }
@@ -219,6 +219,12 @@
         flex: 0 0 272px;
     }
 
+    & .group-list > .add-group {
+        width: 272px;
+        min-width: 272px;
+        flex: 0 0 272px;
+    }
+
     & .group-preview {
         display: flex;
         max-height: calc(100vh - 180px);
@@ -383,6 +389,26 @@
 
     & .add-group button:hover {
         background: #ffffff50;
+    }
+
+    & .add-group-actions .add-group-submit,
+    & .add-group-actions .add-group-submit:disabled,
+    & .add-group-actions .add-group-submit:hover {
+        display: inline-flex;
+        min-height: 32px;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    & .add-group-actions .add-group-submit {
+        background: #0c66e4;
+        color: #fff;
+    }
+
+    & .add-group-actions .add-group-submit:hover {
+        background: #0055cc;
     }
 
     & .board-bottom-nav {

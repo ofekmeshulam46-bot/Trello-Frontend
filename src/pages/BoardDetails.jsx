@@ -15,6 +15,19 @@ export function BoardDetails() {
     const board = useSelector(storeState => storeState.boardModule.board)
     const backgroundImage = board?.style?.backgroundImage?.trim() || ''
 
+    function getHighResolutionImageUrl(backgroundImage) {
+        const imageUrl = backgroundImage.startsWith('url(')
+            ? backgroundImage.slice(4, -1).replace(/^['"]|['"]$/g, '')
+            : backgroundImage
+
+        const highResolutionUrl = new URL(imageUrl)
+        highResolutionUrl.searchParams.set('auto', 'format')
+        highResolutionUrl.searchParams.set('fit', 'crop')
+        highResolutionUrl.searchParams.set('w', '1920')
+        highResolutionUrl.searchParams.set('q', '90')
+        return highResolutionUrl.toString()
+    }
+
     useEffect(() => {
         const boardDetailsEl = boardDetailsRef.current
         if (!boardDetailsEl) return
@@ -29,12 +42,11 @@ export function BoardDetails() {
             return
         }
 
-        const imageUrl = backgroundImage.startsWith('url(')
-            ? backgroundImage
-            : `url("${backgroundImage}")`
-        boardDetailsEl.style.backgroundImage = imageUrl
+        const imageUrl = getHighResolutionImageUrl(backgroundImage)
+        boardDetailsEl.style.backgroundImage = `url("${imageUrl}")`
         boardDetailsEl.style.backgroundSize = 'cover'
         boardDetailsEl.style.backgroundPosition = 'center'
+        boardDetailsEl.style.backgroundRepeat = 'no-repeat'
     }, [backgroundImage])
 
     useEffect(() => {

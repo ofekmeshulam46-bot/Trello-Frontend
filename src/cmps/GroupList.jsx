@@ -146,7 +146,8 @@ export function GroupList({ groups, labels = [], boardId }) {
         function handleOutsideClick(ev) {
             if (
                 addGroupRef.current &&
-                !addGroupRef.current.contains(ev.target)
+                !addGroupRef.current.contains(ev.target) &&
+                !ev.target.closest('.add-group')
             ) {
                 onCancelAddGroup()
             }
