@@ -347,10 +347,18 @@
     }
 
     & .add-task {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
         flex: 0 0 auto;
-        padding: 9px 7px 3px;
+        padding: 9px 8px;
+        border: none;
+        border-radius: 6px;
+        background: transparent;
         color: #44546f;
         font-size: 13px;
+        text-align: left;
         cursor: pointer;
     }
 
@@ -377,7 +385,37 @@
         background: #ffffff50;
     }
 
-     & .board-share-container {
+    & .board-bottom-nav {
+        position: fixed;
+        z-index: 1;
+        bottom: 8px;
+        left: 50%;
+        display: flex;
+        min-height: 42px;
+        align-items: center;
+        gap: 5px;
+        transform: translateX(-50%);
+        border: 1px solid #dfe1e6;
+        border-radius: 10px;
+        background: #fff;
+        padding: 4px 8px;
+        box-shadow: 0 4px 12px #091e4226;
+        color: #172b4d;
+        white-space: nowrap;
+    }
+
+    & .board-bottom-nav span {
+        border-radius: 5px;
+        padding: 7px 9px;
+        font-size: 12px;
+    }
+
+    & .board-bottom-nav .selected {
+        background: #e9f2ff;
+        color: #0c66e4;
+    }
+
+    & .board-share-container {
         position: relative;
         display: flex;
         align-items: center;
@@ -482,4 +520,267 @@
         }
 
     }
+}
+
+/* Task Delete Button */
+
+.board-details .task-preview-wrapper {
+    position: relative;
+}
+
+.board-details .task-preview-wrapper>.task-delete-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 26px;
+    min-width: 26px;
+    height: 26px;
+    margin: 0;
+    padding: 0;
+
+    border: none;
+    border-radius: 5px;
+    background: #f1f2f4;
+    color: #44546f;
+    font-size: 16px;
+
+    opacity: 0;
+    cursor: pointer;
+}
+
+.board-details .task-preview-wrapper:hover>.task-delete-btn,
+.board-details .task-preview-wrapper>.task-delete-btn:focus-visible {
+    opacity: 1;
+}
+
+.board-details .task-preview-wrapper>.task-delete-btn:hover {
+    background: #ffebe6;
+    color: #c62828;
+}
+
+
+
+/* Inline Task Creation */
+
+.board-details .add-task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 8px;
+}
+
+.board-details .add-task-input {
+    width: 100%;
+    min-height: 64px;
+    box-sizing: border-box;
+    padding: 10px;
+    resize: vertical;
+    border: none;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 2px #091e4240;
+    color: #172b4d;
+    font: inherit;
+    font-size: 13px;
+    outline: none;
+}
+
+.board-details .add-task-input:focus {
+    box-shadow: 0 0 0 2px #0c66e4;
+}
+
+.board-details .add-task-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.board-details .add-task-actions .add-task-submit {
+    padding: 7px 12px;
+    border: none;
+    border-radius: 4px;
+    background: #0c66e4;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.board-details .add-task-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.board-details .add-task-actions .add-task-cancel {
+    padding: 4px 10px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: #44546f;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.board-details .add-task-actions .add-task-cancel:hover {
+    background: #091e4214;
+}
+
+
+/* Inline Group Creation */
+
+.board-details .add-group-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 10px;
+    background: #f1f2f4;
+}
+
+.board-details .add-group-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 2px solid #0c66e4;
+    border-radius: 4px;
+    background: #fff;
+    color: #172b4d;
+    font: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+.board-details .add-group-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.board-details .add-group-actions .add-group-submit {
+    padding: 7px 12px;
+    border: none;
+    border-radius: 4px;
+    background: #0c66e4;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.board-details .add-group-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.board-details .add-group-actions .add-group-cancel {
+    padding: 4px 10px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: #44546f;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.board-details .add-group-actions .add-group-cancel:hover {
+    background: #091e4214;
+}
+
+
+/* Group Drag Handle */
+
+.board-details .group-drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    color: #626f86;
+    font-size: 20px;
+    cursor: grab;
+    user-select: none;
+}
+
+.board-details .group-drag-handle:hover {
+    background: #091e4214;
+    color: #172b4d;
+}
+
+.board-details .group-drag-handle:active {
+    cursor: grabbing;
+}
+
+/* Allow dropping cards into empty lists */
+
+.board-details .group-cards {
+    min-height: 32px;
+}
+
+.board-details .task-list {
+    min-height: 24px;
+}
+
+
+/* Card Drag & Drop Indicators */
+
+.board-details .task-list > li {
+    position: relative;
+}
+
+.board-details .task-list > li.drop-before::before,
+.board-details .task-list > li.drop-after::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    height: 3px;
+    border-radius: 3px;
+    background: #0c66e4;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.board-details .task-list > li.drop-before::before {
+    top: 0;
+    z-index: 20;
+}
+
+.board-details .task-list > li.drop-after::after {
+    bottom: -6px;
+}
+
+.board-details .group-cards.drop-empty {
+    min-height: 40px;
+    border-radius: 6px;
+    outline: 2px dashed #0c66e4;
+    outline-offset: -2px;
+    background: #e9f2ff;
+}
+
+/* Appearance while dragging a task */
+
+.board-details .task-list > li.task-dragging {
+    opacity: 0.4;
+}
+
+.board-details .task-list > li[draggable="true"] {
+    cursor: grab;
+}
+
+.board-details .task-list > li.task-dragging {
+    cursor: grabbing;
+}
+
+/* Appearance while dragging an entire list */
+
+.board-details .group-list > li.group-dragging {
+    opacity: 0.4;
 }
