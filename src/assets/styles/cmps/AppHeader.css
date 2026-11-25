@@ -1,94 +1,112 @@
+.app-header {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  height: 48px;
+  width: 100%;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  border-block-end: 1px solid #ffffff30;
+  background: #0c66c2;
+  padding-inline: 12px;
+  color: #fff;
+  grid-column: 1 / -1;
 
-  .app-header {
-    position: relative;
-    z-index: 100;
+  & .board-brand {
     display: flex;
+    width: 120px;
     height: 48px;
-    width: 100%;
-    box-sizing: border-box;
-    flex: 0 0 auto;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  & .board-brand img {
+    width: 120px;
+    height: 48px;
+    object-fit: contain;
+  }
+
+  &.board-page-header .board-brand:hover,
+  &.board-page-header .board-brand:focus-visible {
+    background: rgb(255 255 255 / 20%);
+  }
+
+  &.boards-page-header .board-brand:hover,
+  &.boards-page-header .board-brand:focus-visible {
+    background: var(--board-hover);
+  }
+
+  & .board-search {
+    display: flex;
+    width: min(52vw, 760px);
+    height: 30px;
+    margin-inline-start: 500px;
     align-items: center;
     gap: 8px;
-    border-block-end: 1px solid #ffffff30;
-    background: #0c66c2;
-    padding-inline: 12px;
+    border: 1px solid #ffffff44;
+    border-radius: 5px;
+    background: #ffffff24;
+    padding-inline: 10px;
     color: #fff;
-    grid-column: 1 / -1;
+    font-size: 14px;
+  }
 
-    & .board-brand {
-      display: flex;
-      width: 120px;
-      height: 48px;
-      align-items: center;
-      text-decoration: none;
-      border-radius: 4px;
-      overflow: hidden;
-    }
+  & .board-create {
+    height: 30px;
+    border: 0;
+    border-radius: 5px;
+    background: #fff;
+    padding-inline: 13px;
+    color: #0c66c2;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
 
-    & .board-brand img {
-      width: 120px;
-      height: 48px;
-      object-fit: contain;
-    }
-
-    &.board-page-header .board-brand:hover,
-    &.board-page-header .board-brand:focus-visible {
-      background: rgb(255 255 255 / 20%);
-    }
-
-    &.boards-page-header .board-brand:hover,
-    &.boards-page-header .board-brand:focus-visible {
-      background: var(--board-hover);
-    }
+  &.boards-page-header {
+    border-block-end: 1px solid var(--board-border);
+    background: var(--board-surface);
+    color: var(--board-text);
 
     & .board-search {
-      display: flex;
-      width: min(52vw, 760px);
-      height: 30px;
-      margin-inline-start: 570px;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid #ffffff44;
-      border-radius: 5px;
-      background: #ffffff24;
+      width: 620px;
+      height: 34px;
+      margin-inline-start: 500px;
+      border: 1px solid #172b4d;
+      border-radius: 8px;
+      background: var(--board-surface);
+      color: var(--board-text);
       padding-inline: 10px;
-      color: #fff;
-      font-size: 14px;
+
+      & .search-icon {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
+        object-fit: contain;
+        filter: invert(42%) sepia(12%) saturate(748%) hue-rotate(178deg) brightness(93%) contrast(87%);
+      }
+
+      & .search-text {
+        color: #44546f;
+        font-size: 14px;
+      }
     }
 
     & .board-create {
-      height: 30px;
-      border: 0;
-      border-radius: 5px;
-      background: #fff;
-      padding-inline: 13px;
-      color: #0c66c2;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    &.boards-page-header {
-      border-block-end: 1px solid var(--board-border);
-      background: var(--board-surface);
-      color: var(--board-text);
-
-      & .board-search {
-        border: 1px solid var(--board-border);
-        background: var(--board-hover);
-        color: var(--board-text);
-      }
-
-      & .board-create {
-        background: var(--board-active);
-        color: var(--board-blue);
-      }
-    }
-
-    &.board-page-header {
-      border-block-end: 1px solid #ffffff30;
-      background: #0c66c2;
+      height: 34px;
+      border-radius: 8px;
+      background: #0c66e4;
       color: #fff;
     }
   }
 
+  &.board-page-header {
+    border-block-end: 1px solid #ffffff30;
+    background: #0c66c2;
+    color: #fff;
+  }
+}

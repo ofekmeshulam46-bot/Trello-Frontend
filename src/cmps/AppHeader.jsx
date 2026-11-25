@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import boardBrand from '../assets/icons/main-icons/board-brand.svg'
 import boardBrandLight from '../assets/icons/main-icons/board-brand-light.svg'
+import searchIcon from '../assets/icons/main-icons/search.svg'
 
 export function AppHeader() {
   const createBtnRef = useRef(null)
@@ -34,7 +35,8 @@ export function AppHeader() {
         />
       </Link>
       <div className="board-search" aria-label="Search">
-        ⌕ <span>Search</span>
+        <img className="search-icon" src={searchIcon} alt="" aria-hidden="true" />
+        <span className="search-text">Search</span>
       </div>
       <button
         ref={createBtnRef}
