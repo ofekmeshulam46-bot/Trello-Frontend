@@ -1,0 +1,106 @@
+.task-add-menu {
+    position: relative;
+
+    & .panel {
+        position: absolute;
+        z-index: 8;
+        inset-block-start: calc(100% + 0.5rem);
+        inset-inline-start: 0;
+        inline-size: min(21.875rem, calc(100vw - 2rem));
+        max-block-size: min(80dvh, 38rem);
+        overflow-y: auto;
+        border: 1px solid var(--board-border);
+        border-radius: 0.5rem;
+        background: var(--board-surface);
+        padding: 0.5rem 0.75rem 0.75rem;
+        box-shadow: 0 0.5rem 1.125rem color-mix(in srgb, var(--board-text) 15%, transparent);
+    }
+
+    & .header {
+        position: relative;
+        display: flex;
+        min-block-size: 3rem;
+        align-items: center;
+        justify-content: center;
+
+        & h2 {
+            margin: 0;
+            color: var(--board-muted-text);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        & button {
+            position: absolute;
+            inset-block-start: 0.25rem;
+            inset-inline-end: 0;
+            display: grid;
+            inline-size: 2rem;
+            block-size: 2rem;
+            place-items: center;
+            margin: 0;
+            border: 0;
+            border-radius: 0.25rem;
+            background: transparent;
+            color: var(--board-muted-text);
+            font-size: 1.375rem;
+            line-height: 1;
+
+            &:hover {
+                background: var(--board-hover);
+            }
+        }
+    }
+
+    & .options {
+        display: grid;
+        gap: 0.125rem;
+    }
+
+    & .option {
+        display: grid;
+        min-block-size: 3.75rem;
+        align-items: center;
+        grid-template-columns: 3rem minmax(0, 1fr);
+        gap: 0.625rem;
+        padding-block: 0.25rem;
+    }
+
+    & .icon {
+        display: grid;
+        inline-size: 3rem;
+        block-size: 3rem;
+        place-items: center;
+        border: 1px solid var(--board-border);
+        border-radius: 0.3125rem;
+        color: var(--board-text);
+
+        & svg {
+            inline-size: 1.25rem;
+            block-size: 1.25rem;
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 1.8;
+        }
+    }
+
+    & .option strong,
+    & .option small {
+        display: block;
+        font-weight: 400;
+    }
+
+    & .option strong {
+        margin-block-end: 0.1875rem;
+        color: var(--board-text);
+        font-size: 1rem;
+    }
+
+    & .option small {
+        color: var(--board-muted-text);
+        font-size: 0.875rem;
+        line-height: 1.3;
+    }
+}
