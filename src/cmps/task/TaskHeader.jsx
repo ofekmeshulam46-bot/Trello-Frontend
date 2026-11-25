@@ -1,3 +1,4 @@
+import { CloseIcon } from "../../assets/icons/task-icons.jsx"
 
 export function TaskHeader({ task, group, onClose }) {
     return <header
@@ -11,7 +12,9 @@ export function TaskHeader({ task, group, onClose }) {
     >
         <span className="status">{group?.title}</span>
         <div className="actions">
-            <button type="button" aria-label="Close task details" onClick={onClose}>×</button>
+            <button type="button" aria-label="Close task details" onClick={onClose}>
+                {CloseIcon}
+            </button>
         </div>
     </header>
 }

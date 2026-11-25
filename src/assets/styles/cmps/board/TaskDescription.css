@@ -48,6 +48,30 @@
     stroke-width: 2;
 }
 
+.task-description-toggle-default,
+.task-description-toggle-hover {
+    display: grid;
+    grid-area: 1 / 1;
+    transition: opacity 0.15s ease;
+}
+
+.task-description-toggle-hover {
+    opacity: 0;
+}
+
+.task-description-toggle-default svg {
+    width: 18px;
+    height: 18px;
+}
+
+.task-description-toggle:hover .task-description-toggle-default {
+    opacity: 0;
+}
+
+.task-description-toggle:hover .task-description-toggle-hover {
+    opacity: 1;
+}
+
 .task-description-content[hidden] {
     display: none;
 }

@@ -35,15 +35,21 @@
             block-size: 2.375rem;
             place-items: center;
             margin: 0;
+            padding: 0;
             border: 0;
             border-radius: 50%;
             background: var(--board-surface);
             color: var(--board-text);
-            font-size: 1.25rem;
             line-height: 1;
 
             &:hover {
                 background: var(--board-hover);
+            }
+
+            & svg {
+                display: block;
+                inline-size: 1rem;
+                block-size: 1rem;
             }
         }
     }
