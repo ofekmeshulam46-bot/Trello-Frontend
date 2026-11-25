@@ -37,9 +37,7 @@ export function TaskLabels({ labels = [], labelIds = [], onChange, onCreateLabel
     const filteredLabels = labels.filter(label =>
         (label.title || '').toLowerCase().includes(searchTerm)
     )
-    function getPattern(label) {
-        return `task-label-pattern-${labels.indexOf(label) % 4}`
-    }
+
 
     function onToggleLabel(labelId) {
         const nextLabelIds = labelIds.includes(labelId)
@@ -88,7 +86,7 @@ export function TaskLabels({ labels = [], labelIds = [], onChange, onCreateLabel
                     }}
                     style={label.color ? { backgroundColor: label.color } : undefined}
                 >
-                    <span className={`task-label-pattern ${getPattern(label)}`} aria-hidden="true" />
+                   
                     {label.title}
                 </button>
             ))}
@@ -192,7 +190,7 @@ export function TaskLabels({ labels = [], labelIds = [], onChange, onCreateLabel
                                         className="task-label-picker-swatch"
                                         style={{ backgroundColor: label.color || '#dfe1e6' }}
                                     >
-                                        <span className={`task-label-pattern ${getPattern(label)}`} aria-hidden="true" />
+                                        
                                         {label.title}
                                     </span>
                                 </label>
