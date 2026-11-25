@@ -7,10 +7,7 @@ import {
     BoardsIcon,
     ChevronDownIcon,
     HomeIcon,
-    MembersIcon,
-    SettingsIcon,
     StarIcon,
-    TemplatesIcon,
     TrelloIcon,
 } from '../assets/icons/board-icons.jsx'
 
@@ -112,10 +109,6 @@ export function BoardIndex() {
             <span>Boards</span>
           </button>
           <button className="sidebar-nav-item" type="button">
-            {TemplatesIcon}
-            <span>Templates</span>
-          </button>
-          <button className="sidebar-nav-item" type="button">
             {HomeIcon}
             <span>Home</span>
           </button>
@@ -148,7 +141,7 @@ export function BoardIndex() {
               onToggleStar={onToggleStar}
               showCreateBoard={false}
               showBoardActions={true}
-              listClassName="board-section-list"
+              listClassName="starred-boards-list"
               boardToEdit={starredBoardToEdit}
               listSource="starred"
               onSaveBoard={onSaveBoard}
@@ -163,20 +156,6 @@ export function BoardIndex() {
         <div className="workspace-header">
           <span className="workspace-logo">T</span>
           <h3 className="workspace-name">Trello Workspace</h3>
-          <div className="workspace-utilities">
-            <button className="workspace-utility" type="button">
-              {BoardsIcon}
-              <span>Boards</span>
-            </button>
-            <button className="workspace-utility" type="button">
-              {MembersIcon}
-              <span>Members</span>
-            </button>
-            <button className="workspace-utility" type="button">
-              {SettingsIcon}
-              <span>Settings</span>
-            </button>
-          </div>
         </div>
         <BoardList
           boards={boards}
