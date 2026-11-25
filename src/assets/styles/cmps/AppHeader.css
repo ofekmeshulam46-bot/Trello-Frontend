@@ -108,5 +108,40 @@
     border-block-end: 1px solid #ffffff30;
     background: #0c66c2;
     color: #fff;
+
+    & .board-search {
+      width: min(42vw, 620px);
+      height: 30px;
+      margin-inline-start: 650px;
+      border: 1px solid #ffffff44;
+      border-radius: 5px;
+      background: #ffffff24;
+      color: #fff;
+      padding-inline: 10px;
+    }
+
+    & .search-icon {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    & .search-text {
+      color: #fff;
+      font-size: 14px;
+    }
+
+    & .board-create {
+      height: 30px;
+      border: 0;
+      border-radius: 5px;
+      background: #fff;
+      color: #0c66c2;
+      padding-inline: 13px;
+      font-size: 13px;
+      font-weight: 600;
+    }
   }
 }
