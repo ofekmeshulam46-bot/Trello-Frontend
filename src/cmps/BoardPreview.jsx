@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { StarWithCoverIcon } from '../assets/icons/board-icons.jsx'
+import { StarWithCoverIcon } from '../assets/icons/BoardIndex/board-icons.jsx'
 
 export function BoardPreview({ board, onToggleStar }) {
   const coverRef = useRef(null)

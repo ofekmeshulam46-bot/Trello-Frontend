@@ -96,11 +96,6 @@ export function BoardDetails() {
     const groups = board.groups
 
     return <section className="board-details" ref={boardDetailsRef}>
-        <header className="board-topbar">
-            <div className="board-brand"><span className="board-brand-mark">▥</span> Trello</div>
-            <div className="board-search" aria-label="Search">⌕ <span>Search</span></div>
-            <button className="board-create" type="button">Create</button>
-        </header>
         <div className="board-toolbar">
             {isEditingTitle ? (                      //checks if we are editing title
                 <input

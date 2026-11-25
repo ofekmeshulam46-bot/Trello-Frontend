@@ -24,7 +24,7 @@ export function RootCmp() {
 
   return (
     <div className={`main-container${isBoardPage ? " board-page" : ""}`}>
-      {!isBoardPage && <AppHeader />}
+      <AppHeader />
       <UserMsg />
 
       <main className={isBoardPage ? "board-page-main" : ""}>

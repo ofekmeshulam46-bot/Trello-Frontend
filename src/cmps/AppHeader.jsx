@@ -1,49 +1,15 @@
-import { Link, NavLink } from 'react-router-dom'
-import { useNavigate } from 'react-router'
-import { useSelector } from 'react-redux'
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import { logout } from '../store/actions/user.actions'
-
 export function AppHeader() {
-	const user = useSelector(storeState => storeState.userModule.user)
-	const navigate = useNavigate()
-
-	async function onLogout() {
-		try {
-			await logout()
-			navigate('/')
-			showSuccessMsg(`Bye now`)
-		} catch (err) {
-			showErrorMsg('Cannot logout')
-		}
-	}
-
-	return (
-		<header className="app-header full">
-			<nav>
-				<NavLink to="/" className="logo">
-					E2E Demo
-				</NavLink>
-				<NavLink to="/boards">Board</NavLink>
-				<NavLink to="about">About</NavLink>
-				<NavLink to="car">Cars</NavLink>
-				<NavLink to="chat">Chat</NavLink>
-				<NavLink to="review">Review</NavLink>
-
-                {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
-
-				{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
-				{user && (
-					<div className="user-info">
-						<Link to={`user/${user._id}`}>
-							{user.imgUrl && <img src={user.imgUrl} />}
-							{user.fullname}
-						</Link>
-						<span className="score">{user.score?.toLocaleString()}</span>
-						<button onClick={onLogout}>logout</button>
-					</div>
-				)}
-			</nav>
-		</header>
-	)
+  return (
+    <header className="app-header board-topbar">
+      <div className="board-brand">
+        <span className="board-brand-mark">▥</span> Trello
+      </div>
+      <div className="board-search" aria-label="Search">
+        ⌕ <span>Search</span>
+      </div>
+      <button className="board-create" type="button">
+        Create
+      </button>
+    </header>
+  )
 }

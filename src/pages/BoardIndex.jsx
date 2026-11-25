@@ -9,7 +9,7 @@ import {
     HomeIcon,
     StarIcon,
     TrelloIcon,
-} from '../assets/icons/board-icons.jsx'
+} from '../assets/icons/BoardIndex/board-icons.jsx'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { boardService } from '../services/board/board.service.local.js'
@@ -131,7 +131,7 @@ export function BoardIndex() {
               <span className="board-section-icon" aria-hidden="true">
                 {StarIcon}
               </span>
-              <span>Starred boards</span>
+              <span>Starred Boards</span>
             </h3>
             <BoardList
               boards={starredBoards}
