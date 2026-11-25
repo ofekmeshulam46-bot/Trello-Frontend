@@ -1,0 +1,187 @@
+.task-dates-field {
+    flex: 0 0 100%;
+}
+
+.task-due-date-button {
+    display: inline-flex;
+    min-height: 36px;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    border: 1px solid #dfe1e6;
+    border-radius: 6px;
+    background: #fff;
+    padding: 5px 10px;
+    color: #44546f;
+    font: inherit;
+}
+
+.task-due-date-button:hover {
+    background: #f1f2f4;
+}
+
+.task-due-date-overdue {
+    border-radius: 3px;
+    background: #ffebe6;
+    padding: 2px 5px;
+    color: #ae2e24;
+    font-size: 12px;
+}
+
+.task-due-date-chevron {
+    color: #44546f;
+    font-size: 16px;
+}
+
+.task-date-picker {
+    display: flex;
+    flex-direction: column;
+    width: 336px;
+    max-width: calc(100vw - 32px);
+    gap: 0;
+    overflow: hidden;
+    padding: 0 0 8px;
+}
+
+.task-date-picker-header {
+    position: relative;
+    display: flex;
+    min-height: 54px;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #dfe1e6;
+}
+
+.task-date-picker-header h2 {
+    margin: 0;
+    color: #172b4d;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.task-date-picker-header button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    margin: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #172b4d;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.task-date-picker-header button:hover,
+.task-date-calendar-header button:hover {
+    background: #f1f2f4;
+}
+
+.task-trello-calendar.react-datepicker {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    background: #fff;
+    color: #172b4d;
+    font: inherit;
+}
+
+.task-trello-calendar .react-datepicker__month-container {
+    float: none;
+    width: 100%;
+}
+
+.task-trello-calendar .react-datepicker__header {
+    border-bottom: 0;
+    background: #fff;
+    padding: 0;
+}
+
+.task-date-calendar-header {
+    display: flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+}
+
+.task-date-calendar-header strong {
+    flex: 1;
+    color: #172b4d;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.task-date-calendar-header button {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 auto;
+    place-items: center;
+    margin: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #626f86;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.task-trello-calendar .react-datepicker__day-names,
+.task-trello-calendar .react-datepicker__week {
+    display: flex;
+}
+
+.task-trello-calendar .react-datepicker__day-name,
+.task-trello-calendar .react-datepicker__day {
+    width: calc(100% / 7);
+    height: 38px;
+    flex: 1;
+    margin: 0;
+    line-height: 38px;
+}
+
+.task-trello-calendar .react-datepicker__day-name {
+    color: #626f86;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.task-trello-calendar .react-datepicker__day {
+    border-radius: 5px;
+    color: #172b4d;
+}
+
+.task-trello-calendar .react-datepicker__day:hover {
+    border-radius: 5px;
+    background: #f1f2f4;
+}
+
+.task-trello-calendar .react-datepicker__day--selected,
+.task-trello-calendar .react-datepicker__day--keyboard-selected {
+    background: #e9f2ff;
+    color: #0c66e4;
+}
+
+.task-trello-calendar .react-datepicker__day--outside-month {
+    color: #8993a4;
+}
+
+.task-date-picker > .task-date-clear {
+    align-self: stretch;
+    margin: 8px 12px 0;
+    border-radius: 4px;
+    background: #f1f2f4;
+    color: #172b4d;
+    text-align: center;
+}
+
+.task-date-picker > .task-date-clear:hover {
+    background: #e9ebee;
+}

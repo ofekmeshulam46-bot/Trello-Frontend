@@ -1,0 +1,56 @@
+.task-header {
+    position: relative;
+    display: flex;
+    min-block-size: 8.125rem;
+    flex: 0 0 auto;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-position: center;
+    background-size: cover;
+    padding: 1rem 1.25rem;
+
+    &.has-image {
+        min-block-size: 12rem;
+    }
+
+    & .status {
+        max-inline-size: 55%;
+        overflow: hidden;
+        border-radius: 0.25rem;
+        background: color-mix(in srgb, var(--board-surface) 92%, transparent);
+        padding: 0.4375rem 0.625rem;
+        color: var(--board-text);
+        font-size: 0.8125rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    & .actions {
+        display: flex;
+        gap: 0.5rem;
+
+        & button {
+            display: grid;
+            inline-size: 2.375rem;
+            block-size: 2.375rem;
+            place-items: center;
+            margin: 0;
+            border: 0;
+            border-radius: 50%;
+            background: var(--board-surface);
+            color: var(--board-text);
+            font-size: 1.25rem;
+            line-height: 1;
+
+            &:hover {
+                background: var(--board-hover);
+            }
+        }
+    }
+}
+
+@media (max-width: 48rem) {
+    .task-header.has-image {
+        min-block-size: 8.25rem;
+    }
+}

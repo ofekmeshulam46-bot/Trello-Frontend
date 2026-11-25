@@ -1,0 +1,114 @@
+.task-members-field {
+    flex: 0 0 auto;
+}
+
+.task-members-popover label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border-radius: 4px;
+    padding: 5px 6px;
+    color: #172b4d;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.task-members-popover label:hover {
+    background: #f1f2f4;
+}
+
+.task-members-popover input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+.task-members-popover > strong {
+    padding: 4px 6px;
+    color: #44546f;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.task-members-popover .task-member-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+}
+
+.task-card-member-row,
+.task-board-member-row {
+    display: flex;
+    width: 100%;
+    min-height: 44px;
+    align-items: center;
+    gap: 10px;
+    border: 0;
+    border-radius: 4px;
+    margin: 0;
+    padding: 5px;
+    color: #172b4d;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.task-card-member-row {
+    background: #f1f2f4;
+}
+
+.task-board-member-row {
+    background: transparent;
+}
+
+.task-board-member-row:hover {
+    background: #f1f2f4;
+}
+
+.task-card-member-row:hover {
+    background: #e2e4e9;
+}
+
+.task-picker-member-name {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.task-card-member-remove-mark {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    margin: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #44546f;
+    font-size: 20px;
+}
+
+.task-member-avatar {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 auto;
+    margin: 0;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: #172b4d;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+@media (max-width: 760px) {
+    .task-members-popover,
+    .task-member-picker {
+        left: 0;
+    }
+}

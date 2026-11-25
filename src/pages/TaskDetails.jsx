@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import { saveTask, addActivity } from "../store/actions/board.actions.js"
+import { saveBoard, saveTask, addActivity } from "../store/actions/board.actions.js"
+import { makeId } from "../services/util.service.js"
+import { TaskDescription } from "../cmps/task/TaskDescription.jsx"
+import { TaskDates } from "../cmps/task/TaskDates.jsx"
+import { TaskLabels } from "../cmps/task/TaskLabels.jsx"
+import { TaskMembers } from "../cmps/task/TaskMembers.jsx"
+import { TaskHeader } from "../cmps/task/TaskHeader.jsx"
+import { TaskAddMenu } from "../cmps/task/TaskAddMenu.jsx"
 
 export function TaskDetails() {
-    const [description, setDescription] = useState('')
     const [title, setTitle] = useState('')
-    const [dueDate, setDueDate] = useState('')
     const [comment, setComment] = useState('')
     const [saveError, setSaveError] = useState('')
+
+    const [areDetailsVisible, setAreDetailsVisible] = useState(true)
 
     const navigate = useNavigate()
     const { boardId, taskId } = useParams()
@@ -19,26 +26,20 @@ export function TaskDetails() {
         group.tasks.some(task => task.id === taskId)
     )
     const task = group?.tasks.find(task => task.id === taskId)
-    const labels = board?.labels || []
-    const members = board?.members || []
+
     const activities = (board?.activities || []).filter(activity => activity.task?.id === taskId)
-    const taskLabels = labels.filter(label => task?.labelIds?.includes(label.id))
-    const taskMembers = members.filter(member => task?.memberIds?.includes(member._id))
-    const checklists = task?.checklists || []
-    const checklistItems = checklists.flatMap(checklist => checklist.todos || [])
-    const completedItems = checklistItems.filter(item => item.isDone).length
+
     const comments = task?.comments || []
 
     useEffect(() => {
-        setDescription(task?.description || '')
         setTitle(task?.title || '')
-        setDueDate(task?.dueDate || '')
-    }, [task?.description, task?.title, task?.dueDate])
+    }, [task?.title])
 
     useEffect(() => {
         function onKeyDown(ev) {
             if (ev.key === 'Escape') navigate(`/board/${boardId}`)
         }
+
         window.addEventListener('keydown', onKeyDown)
         return () => window.removeEventListener('keydown', onKeyDown)
     }, [boardId, navigate])
@@ -60,12 +61,34 @@ export function TaskDetails() {
         }
     }
 
-    function onToggleItem(field, itemId) {
-        const currentIds = task?.[field] || []
-        const updatedIds = currentIds.includes(itemId)
-            ? currentIds.filter(id => id !== itemId)
-            : [...currentIds, itemId]
-        onSaveField(field, updatedIds)
+    async function onCreateLabel(labelData) {
+        if (!board || !task || !group) return false
+        const label = { ...labelData, id: makeId() }
+        const updatedBoard = {
+            ...board,
+            labels: [...(board.labels || []), label],
+            groups: board.groups.map(boardGroup => boardGroup.id !== group.id
+                ? boardGroup
+                : {
+                    ...boardGroup,
+                    tasks: boardGroup.tasks.map(boardTask => boardTask.id !== task.id
+                        ? boardTask
+                        : {
+                            ...boardTask,
+                            labelIds: [...(boardTask.labelIds || []), label.id],
+                        })
+                })
+        }
+
+        setSaveError('')
+        try {
+            await saveBoard(updatedBoard)
+            return true
+        } catch (err) {
+            console.error('Unable to create task label', err)
+            setSaveError('Unable to create label. Please try again.')
+            return false
+        }
     }
 
     async function onAddComment(ev) {
@@ -73,7 +96,7 @@ export function TaskDetails() {
         const text = comment.trim()
         if (!text) return
         const activity = {
-            id: `a-${Date.now()}`,
+            id: makeId(),
             txt: text,
             createdAt: Date.now(),
             byMember: loggedInUser,
@@ -81,8 +104,14 @@ export function TaskDetails() {
             task: { id: task.id, title: task.title }
         }
 
-        await addActivity(boardId, activity)
-        setComment('')
+        try {
+            await addActivity(boardId, activity)
+            setComment('')
+            setSaveError('')
+        } catch (err) {
+            console.error('Unable to add task comment', err)
+            setSaveError('Unable to post your comment. Please try again.')
+        }
     }
 
     const activityItems = [
@@ -101,30 +130,21 @@ export function TaskDetails() {
     if (!task) return null
 
     return <div
-        className="modal-overlay"
+        className="task-details modal-overlay"
         onMouseDown={ev => {
             if (ev.target === ev.currentTarget) onClose()
         }}
     >
         <section className="task-details-modal" role="dialog" aria-modal="true" aria-label="Task details">
-            <header
-                className={`task-details-cover${task.style?.backgroundImage ? ' has-image' : ''}`}
-                style={{
-                    backgroundColor: task.style?.backgroundColor || '#b6a99a',
-                    backgroundImage: task.style?.backgroundImage
-                        ? `url("${task.style.backgroundImage}")`
-                        : undefined,
-                }}
-            >
-                <span className="task-details-status">{group?.title}</span>
-                <div className="task-details-header-actions">
-                    <button type="button" aria-label="More task actions">•••</button>
-                    <button type="button" aria-label="Close task details" onClick={onClose}>×</button>
-                </div>
-            </header>
+            <TaskHeader
+                task={task}
+                group={group}
+                onClose={onClose}
+            />
 
-            <div className="task-details-columns">
-                <main className="task-details-main">
+
+            <div className={`task-details-columns${areDetailsVisible ? '' : ' details-hidden'}`}>
+                {areDetailsVisible && <main className="task-details-main">
                     <div className="task-details-title-row">
                         <span className="task-details-complete" aria-hidden="true" />
                         <input
@@ -143,110 +163,55 @@ export function TaskDetails() {
                     </div>
 
                     <div className="task-details-attributes">
-                        <div className="task-detail-field">
-                            <span className="task-detail-label">Members</span>
-                            <div className="task-detail-options">
-                                {taskMembers.map(member => (
-                                    <button
-                                        className="task-member-avatar"
-                                        key={member._id}
-                                        type="button"
-                                        title={`Remove ${member.fullname}`}
-                                        onClick={() => onToggleItem('memberIds', member._id)}
-                                    >
-                                        {member.fullname?.charAt(0).toUpperCase() || '?'}
-                                    </button>
-                                ))}
-                                {members.filter(member => !task?.memberIds?.includes(member._id)).map(member => (
-                                    <button
-                                        className="task-add-option"
-                                        key={member._id}
-                                        type="button"
-                                        aria-label={`Add ${member.fullname}`}
-                                        onClick={() => onToggleItem('memberIds', member._id)}
-                                    >+</button>
-                                ))}
-                            </div>
+                        <div className="task-details-actions">
+                            <TaskAddMenu />
+                            <button className="task-toolbar-button" type="button">
+                                <span aria-hidden="true">
+                                    <svg viewBox="0 0 16 16">
+                                        <circle cx="8" cy="8" r="6.25" />
+                                        <path d="M8 4.5v3.75l2.5 1.5" />
+                                    </svg>
+                                </span>
+                                Dates
+                            </button>
+                            <button className="task-toolbar-button" type="button">
+                                <span aria-hidden="true">
+                                    <svg viewBox="0 0 16 16">
+                                        <rect x="2.25" y="2.25" width="11.5" height="11.5" rx="1.5" />
+                                        <path d="m4.5 8 2.25 2.25L11.5 5.5" />
+                                    </svg>
+                                </span>
+                                Checklist
+                            </button>
                         </div>
-                        <div className="task-detail-field">
-                            <span className="task-detail-label">Labels</span>
-                            <div className="task-detail-options">
-                                {taskLabels.map(label => (
-                                    <button
-                                        className="task-label-chip"
-                                        key={label.id}
-                                        type="button"
-                                        title={`Remove ${label.title}`}
-                                        style={label.color ? { backgroundColor: label.color } : undefined}
-                                        onClick={() => onToggleItem('labelIds', label.id)}
-                                    >{label.title}</button>
-                                ))}
-                                {labels.filter(label => !task?.labelIds?.includes(label.id)).length > 0 && (
-                                    <details className="task-label-picker">
-                                        <summary className="task-add-option" aria-label="Add label">+</summary>
-                                        <div className="task-label-menu">
-                                            {labels.filter(label => !task?.labelIds?.includes(label.id)).map(label => (
-                                                <button
-                                                    type="button"
-                                                    key={label.id}
-                                                    onClick={() => onToggleItem('labelIds', label.id)}
-                                                >{label.title}</button>
-                                            ))}
-                                        </div>
-                                    </details>
-                                )}
-                            </div>
-                        </div>
-                        <div className="task-detail-field">
-                            <label className="task-detail-label" htmlFor="task-due-date">Due date</label>
-                            <input
-                                id="task-due-date"
-                                className="task-due-date-input"
-                                type="date"
-                                value={dueDate}
-                                onChange={ev => {
-                                    setDueDate(ev.target.value)
-                                    onSaveField('dueDate', ev.target.value)
-                                }}
-                            />
-                        </div>
+                        <TaskMembers
+                            members={board?.members || []}
+                            memberIds={task?.memberIds || []}
+                            onChange={memberIds => onSaveField('memberIds', memberIds)}
+                        />
+                        <TaskLabels
+                            labels={board?.labels || []}
+                            labelIds={task?.labelIds || []}
+                            onChange={labelIds => onSaveField('labelIds', labelIds)}
+                            onCreateLabel={onCreateLabel}
+                        />
+                        <TaskDates
+                            dueDate={task?.dueDate || ''}
+                            onChange={dueDate => onSaveField('dueDate', dueDate)}
+                        />
                     </div>
 
-                    <section className="task-details-section">
-                        <h2><span aria-hidden="true">☰</span>Description</h2>
-                        <textarea
-                            value={description}
-                            onChange={ev => setDescription(ev.target.value)}
-                            placeholder="Add a more detailed description..."
-                            onBlur={() => {
-                                if (description !== task.description) onSaveField('description', description)
-                            }}
-                        />
-                    </section>
+                    <TaskDescription
+                        savedDescription={task?.description || ''}
+                        onSaveDescription={value => onSaveField('description', value)}
+                    />
 
-                    {checklists.map(checklist => (
-                        <section className="task-details-section" key={checklist.id}>
-                            <h2><span aria-hidden="true">☑</span>{checklist.title}</h2>
-                            <div className="task-checklist-progress">
-                                {checklist.todos?.filter(item => item.isDone).length || 0}/
-                                {checklist.todos?.length || 0} completed
-                            </div>
-                            {(checklist.todos || []).map(item => (
-                                <label className="task-checklist-item" key={item.id}>
-                                    <input type="checkbox" checked={item.isDone} readOnly />
-                                    {item.title}
-                                </label>
-                            ))}
-                        </section>
-                    ))}
-                    {checklistItems.length > 0 && (
-                        <div className="task-checklist-total">{completedItems} of {checklistItems.length} checklist items complete</div>
-                    )}
-                </main>
+                </main>}
 
                 <aside className="task-details-activity">
                     <div className="task-activity-heading">
                         <h2><span aria-hidden="true">▤</span>Comments and activity</h2>
+
                     </div>
                     <form className="task-comment-form" onSubmit={onAddComment}>
                         <textarea
