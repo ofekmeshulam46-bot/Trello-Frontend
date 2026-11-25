@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { TaskDescriptionEditor } from "./TaskDescriptionEditor.jsx"
+import { ChevronDownIcon, ChevronRightIcon, DescriptionIcon } from "../../assets/icons/task-icons.jsx"
 
 export function TaskDescription({ savedDescription = '', onSaveDescription }) {
     const [isExpanded, setIsExpanded] = useState(true)
@@ -25,14 +26,11 @@ export function TaskDescription({ savedDescription = '', onSaveDescription }) {
                 onClick={() => setIsExpanded(expanded => !expanded)}
             >
                 {isExpanded ? (
-                    <svg aria-hidden="true" viewBox="0 0 24 24">
-                        <path d="M3 6h18M3 12h18M3 18h18" />
-                    </svg>
-                ) : (
-                    <svg aria-hidden="true" viewBox="0 0 24 24">
-                        <path d="m9 18 6-6-6-6" />
-                    </svg>
-                )}
+                    <>
+                        <span className="task-description-toggle-default">{DescriptionIcon}</span>
+                        <span className="task-description-toggle-hover">{ChevronDownIcon}</span>
+                    </>
+                ) : ChevronRightIcon}
             </button>
             Description
         </h2>

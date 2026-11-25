@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { ChecklistIcon, ClockIcon, CloseIcon, LabelsIcon, MembersIcon, PlusIcon } from "../../assets/icons/task-icons.jsx"
 
 export function TaskAddMenu() {
     const [isOpen, setIsOpen] = useState(false)
@@ -28,14 +29,14 @@ export function TaskAddMenu() {
 
     return <div className="task-add-menu" ref={menuRef}>
         <button
-            className="task-toolbar-button"
+            className="task-toolbar-button task-add-menu-trigger"
             type="button"
             aria-expanded={isOpen}
             aria-haspopup="dialog"
             aria-controls="task-add-menu-panel"
             onClick={() => setIsOpen(open => !open)}
         >
-            <span aria-hidden="true">+</span>
+            <span className="task-add-menu-icon" aria-hidden="true">{PlusIcon}</span>
             Add
         </button>
         {isOpen && (
@@ -46,15 +47,12 @@ export function TaskAddMenu() {
                         type="button"
                         aria-label="Close add menu"
                         onClick={() => setIsOpen(false)}
-                    >×</button>
+                    >{CloseIcon}</button>
                 </header>
                 <div className="options">
                     <div className="option">
                         <span className="icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M4 5.5h9l7 7-7.5 7.5-7-7z" />
-                                <circle cx="9" cy="10" r="1" />
-                            </svg>
+                            {LabelsIcon}
                         </span>
                         <span>
                             <strong>Labels</strong>
@@ -63,10 +61,7 @@ export function TaskAddMenu() {
                     </div>
                     <div className="option">
                         <span className="icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="8.5" />
-                                <path d="M12 7v5l3 2" />
-                            </svg>
+                            {ClockIcon}
                         </span>
                         <span>
                             <strong>Dates</strong>
@@ -75,10 +70,7 @@ export function TaskAddMenu() {
                     </div>
                     <div className="option">
                         <span className="icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="4" y="4" width="16" height="16" rx="2" />
-                                <path d="m8 12 2.5 2.5L16 9" />
-                            </svg>
+                            {ChecklistIcon}
                         </span>
                         <span>
                             <strong>Checklist</strong>
@@ -87,10 +79,7 @@ export function TaskAddMenu() {
                     </div>
                     <div className="option">
                         <span className="icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <circle cx="12" cy="8" r="3.5" />
-                                <path d="M5 20v-1a7 7 0 0 1 14 0v1z" />
-                            </svg>
+                            {MembersIcon}
                         </span>
                         <span>
                             <strong>Members</strong>

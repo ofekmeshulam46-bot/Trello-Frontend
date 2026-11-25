@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { CloseIcon, MembersIcon, PlusIcon } from "../../assets/icons/task-icons.jsx"
 
 export function TaskMembers({ members = [], memberIds = [], onChange }) {
     const [isOpen, setIsOpen] = useState(false)
@@ -51,13 +52,13 @@ export function TaskMembers({ members = [], memberIds = [], onChange }) {
                 aria-label={isOpen ? 'Close member picker' : 'Choose members'}
                 aria-expanded={isOpen}
                 onClick={() => setIsOpen(open => !open)}
-            >+</button>
+            >{PlusIcon}</button>
         </div>
         {isOpen && (
             <section className="task-toolbar-popover task-member-picker" role="dialog" aria-label="Members">
                 <header className="task-picker-header">
                     <h3>Members</h3>
-                    <button type="button" aria-label="Close member picker" onClick={() => setIsOpen(false)}>×</button>
+                    <button type="button" aria-label="Close member picker" onClick={() => setIsOpen(false)}>{CloseIcon}</button>
                 </header>
                 <input
                     className="task-picker-search"

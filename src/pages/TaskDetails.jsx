@@ -9,6 +9,7 @@ import { TaskLabels } from "../cmps/task/TaskLabels.jsx"
 import { TaskMembers } from "../cmps/task/TaskMembers.jsx"
 import { TaskHeader } from "../cmps/task/TaskHeader.jsx"
 import { TaskAddMenu } from "../cmps/task/TaskAddMenu.jsx"
+import { CircleIcon, ClockIcon, ChecklistIcon, CommentIcon } from "../assets/icons/task-icons.jsx"
 
 export function TaskDetails() {
     const [title, setTitle] = useState('')
@@ -146,7 +147,7 @@ export function TaskDetails() {
             <div className={`task-details-columns${areDetailsVisible ? '' : ' details-hidden'}`}>
                 {areDetailsVisible && <main className="task-details-main">
                     <div className="task-details-title-row">
-                        <span className="task-details-complete" aria-hidden="true" />
+                        <span className="task-details-complete" aria-hidden="true">{CircleIcon}</span>
                         <input
                             className="task-details-title"
                             aria-label="Task title"
@@ -167,19 +168,13 @@ export function TaskDetails() {
                             <TaskAddMenu />
                             <button className="task-toolbar-button" type="button">
                                 <span aria-hidden="true">
-                                    <svg viewBox="0 0 16 16">
-                                        <circle cx="8" cy="8" r="6.25" />
-                                        <path d="M8 4.5v3.75l2.5 1.5" />
-                                    </svg>
+                                    {ClockIcon}
                                 </span>
                                 Dates
                             </button>
                             <button className="task-toolbar-button" type="button">
                                 <span aria-hidden="true">
-                                    <svg viewBox="0 0 16 16">
-                                        <rect x="2.25" y="2.25" width="11.5" height="11.5" rx="1.5" />
-                                        <path d="m4.5 8 2.25 2.25L11.5 5.5" />
-                                    </svg>
+                                    {ChecklistIcon}
                                 </span>
                                 Checklist
                             </button>
@@ -210,7 +205,7 @@ export function TaskDetails() {
 
                 <aside className="task-details-activity">
                     <div className="task-activity-heading">
-                        <h2><span aria-hidden="true">▤</span>Comments and activity</h2>
+                        <h2><span aria-hidden="true">{CommentIcon}</span>Comments and activity</h2>
 
                     </div>
                     <form className="task-comment-form" onSubmit={onAddComment}>

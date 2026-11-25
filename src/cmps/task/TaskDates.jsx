@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import DatePicker from "react-datepicker"
+import { ChevronDownIcon, CloseIcon } from "../../assets/icons/task-icons.jsx"
 
 export function TaskDates({ dueDate = '', onChange }) {
     const [isOpen, setIsOpen] = useState(false)
@@ -41,7 +42,7 @@ export function TaskDates({ dueDate = '', onChange }) {
         >
             <span>{formattedDate || 'Set due date'}</span>
             {isOverdue && <span className="task-due-date-overdue">Overdue</span>}
-            <span className="task-due-date-chevron" aria-hidden="true">⌄</span>
+            <span className="task-due-date-chevron" aria-hidden="true">{ChevronDownIcon}</span>
         </button>
         {isOpen && (
             <div className="task-toolbar-popover task-date-picker" role="dialog" aria-label="Dates">
@@ -52,7 +53,7 @@ export function TaskDates({ dueDate = '', onChange }) {
                         aria-label="Close date picker"
                         onClick={() => setIsOpen(false)}
                     >
-                        ×
+                        {CloseIcon}
                     </button>
                 </header>
                 <DatePicker

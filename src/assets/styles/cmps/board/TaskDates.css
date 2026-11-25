@@ -29,8 +29,14 @@
 }
 
 .task-due-date-chevron {
+    display: inline-flex;
+    align-items: center;
     color: #44546f;
-    font-size: 16px;
+}
+
+.task-due-date-chevron svg {
+    width: 16px;
+    height: 16px;
 }
 
 .task-date-picker {

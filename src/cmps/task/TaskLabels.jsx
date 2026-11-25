@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { CloseIcon, LabelsIcon, PlusIcon } from "../../assets/icons/task-icons.jsx"
 
 const LABEL_COLORS = [
     '#61bd4f',
@@ -99,7 +100,7 @@ export function TaskLabels({ labels = [], labelIds = [], onChange, onCreateLabel
                     setIsOpen(open => !open)
                     setIsCreatingLabel(false)
                 }}
-            >+</button>
+            >{PlusIcon}</button>
         </div>
         {isOpen && (
             <section className="task-toolbar-popover task-label-picker-panel" role="dialog" aria-label="Labels">
@@ -123,7 +124,7 @@ export function TaskLabels({ labels = [], labelIds = [], onChange, onCreateLabel
                             setIsOpen(false)
                             setIsCreatingLabel(false)
                         }}
-                    >×</button>
+                    >{CloseIcon}</button>
                 </header>
                 {isCreatingLabel ? (
                     <form className="task-label-create-form" onSubmit={onSubmitNewLabel}>
