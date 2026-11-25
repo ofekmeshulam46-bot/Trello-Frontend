@@ -653,3 +653,96 @@
 .board-details .add-group-actions .add-group-cancel:hover {
     background: #091e4214;
 }
+
+
+/* Group Drag Handle */
+
+.board-details .group-drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    color: #626f86;
+    font-size: 20px;
+    cursor: grab;
+    user-select: none;
+}
+
+.board-details .group-drag-handle:hover {
+    background: #091e4214;
+    color: #172b4d;
+}
+
+.board-details .group-drag-handle:active {
+    cursor: grabbing;
+}
+
+/* Allow dropping cards into empty lists */
+
+.board-details .group-cards {
+    min-height: 32px;
+}
+
+.board-details .task-list {
+    min-height: 24px;
+}
+
+
+/* Card Drag & Drop Indicators */
+
+.board-details .task-list > li {
+    position: relative;
+}
+
+.board-details .task-list > li.drop-before::before,
+.board-details .task-list > li.drop-after::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    height: 3px;
+    border-radius: 3px;
+    background: #0c66e4;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.board-details .task-list > li.drop-before::before {
+    top: 0;
+    z-index: 20;
+}
+
+.board-details .task-list > li.drop-after::after {
+    bottom: -6px;
+}
+
+.board-details .group-cards.drop-empty {
+    min-height: 40px;
+    border-radius: 6px;
+    outline: 2px dashed #0c66e4;
+    outline-offset: -2px;
+    background: #e9f2ff;
+}
+
+/* Appearance while dragging a task */
+
+.board-details .task-list > li.task-dragging {
+    opacity: 0.4;
+}
+
+.board-details .task-list > li[draggable="true"] {
+    cursor: grab;
+}
+
+.board-details .task-list > li.task-dragging {
+    cursor: grabbing;
+}
+
+/* Appearance while dragging an entire list */
+
+.board-details .group-list > li.group-dragging {
+    opacity: 0.4;
+}
