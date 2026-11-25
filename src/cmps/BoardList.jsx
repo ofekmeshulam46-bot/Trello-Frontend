@@ -24,20 +24,20 @@ export function BoardList({
           {showBoardActions && (
             <div className="board-actions">
               <button
-                className="board-edit"
-                type="button"
-                onClick={() => onEditBoard(board, listSource)}
-                aria-label={`Edit ${board.title}`}
-              >
-                Edit
-              </button>
-              <button
                 className="board-remove"
                 type="button"
                 onClick={() => onRemoveBoard(board._id, board.title)}
                 aria-label={`Remove ${board.title}`}
               >
                 x
+              </button>
+              <button
+                className="board-edit"
+                type="button"
+                onClick={() => onEditBoard(board, listSource)}
+                aria-label={`Edit ${board.title}`}
+              >
+                Edit
               </button>
             </div>
           )}
