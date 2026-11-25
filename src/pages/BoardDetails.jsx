@@ -10,8 +10,32 @@ export function BoardDetails() {
     const [editedTitle, setEditedTitle] = useState('')
     const [isShareOpen, setIsShareOpen] = useState(false)
     const shareRef = useRef(null)
+    const boardDetailsRef = useRef(null)
     const { boardId } = useParams()
     const board = useSelector(storeState => storeState.boardModule.board)
+    const backgroundImage = board?.style?.backgroundImage?.trim() || ''
+
+    useEffect(() => {
+        const boardDetailsEl = boardDetailsRef.current
+        if (!boardDetailsEl) return
+
+        boardDetailsEl.style.background = ''
+        boardDetailsEl.style.backgroundImage = ''
+
+        if (!backgroundImage || backgroundImage === 'https://unsplash.com') return
+
+        if (backgroundImage.startsWith('linear-gradient')) {
+            boardDetailsEl.style.background = backgroundImage
+            return
+        }
+
+        const imageUrl = backgroundImage.startsWith('url(')
+            ? backgroundImage
+            : `url("${backgroundImage}")`
+        boardDetailsEl.style.backgroundImage = imageUrl
+        boardDetailsEl.style.backgroundSize = 'cover'
+        boardDetailsEl.style.backgroundPosition = 'center'
+    }, [backgroundImage])
 
     useEffect(() => {
         loadBoard(boardId)
@@ -59,7 +83,7 @@ export function BoardDetails() {
 }
     const groups = board.groups
 
-    return <section className="board-details">
+    return <section className="board-details" ref={boardDetailsRef}>
         <header className="board-topbar">
             <div className="board-brand"><span className="board-brand-mark">▥</span> Trello</div>
             <div className="board-search" aria-label="Search">⌕ <span>Search</span></div>
@@ -180,12 +204,6 @@ export function BoardDetails() {
             groups={groups || []}
             labels={board.labels || []}
             boardId={board._id} />
-        <nav className="board-bottom-nav" aria-label="Board navigation">
-            <span>▤ Inbox</span>
-            <span>▦ Planner</span>
-            <span className="selected">▥ Board</span>
-            <span>▣ Switch boards</span>
-        </nav>
         {/* <pre>{JSON.stringify(board, null, 2)}</pre> */}
         <Outlet />
     </section>
