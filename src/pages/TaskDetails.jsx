@@ -7,6 +7,8 @@ import { TaskDescription } from "../cmps/task/TaskDescription.jsx"
 import { TaskDates } from "../cmps/task/TaskDates.jsx"
 import { TaskLabels } from "../cmps/task/TaskLabels.jsx"
 import { TaskMembers } from "../cmps/task/TaskMembers.jsx"
+import { TaskHeader } from "../cmps/task/TaskHeader.jsx"
+import { TaskAddMenu } from "../cmps/task/TaskAddMenu.jsx"
 
 export function TaskDetails() {
     const [title, setTitle] = useState('')
@@ -37,6 +39,7 @@ export function TaskDetails() {
         function onKeyDown(ev) {
             if (ev.key === 'Escape') navigate(`/board/${boardId}`)
         }
+
         window.addEventListener('keydown', onKeyDown)
         return () => window.removeEventListener('keydown', onKeyDown)
     }, [boardId, navigate])
@@ -127,27 +130,18 @@ export function TaskDetails() {
     if (!task) return null
 
     return <div
-        className="modal-overlay"
+        className="task-details modal-overlay"
         onMouseDown={ev => {
             if (ev.target === ev.currentTarget) onClose()
         }}
     >
         <section className="task-details-modal" role="dialog" aria-modal="true" aria-label="Task details">
-            <header
-                className={`task-details-cover${task.style?.backgroundImage ? ' has-image' : ''}`}
-                style={{
-                    backgroundColor: task.style?.backgroundColor || '#b6a99a',
-                    backgroundImage: task.style?.backgroundImage
-                        ? `url("${task.style.backgroundImage}")`
-                        : undefined,
-                }}
-            >
-                <span className="task-details-status">{group?.title}</span>
-                <div className="task-details-header-actions">
-                    <button type="button" aria-label="More task actions">•••</button>
-                    <button type="button" aria-label="Close task details" onClick={onClose}>×</button>
-                </div>
-            </header>
+            <TaskHeader
+                task={task}
+                group={group}
+                onClose={onClose}
+            />
+
 
             <div className={`task-details-columns${areDetailsVisible ? '' : ' details-hidden'}`}>
                 {areDetailsVisible && <main className="task-details-main">
@@ -169,6 +163,27 @@ export function TaskDetails() {
                     </div>
 
                     <div className="task-details-attributes">
+                        <div className="task-details-actions">
+                            <TaskAddMenu />
+                            <button className="task-toolbar-button" type="button">
+                                <span aria-hidden="true">
+                                    <svg viewBox="0 0 16 16">
+                                        <circle cx="8" cy="8" r="6.25" />
+                                        <path d="M8 4.5v3.75l2.5 1.5" />
+                                    </svg>
+                                </span>
+                                Dates
+                            </button>
+                            <button className="task-toolbar-button" type="button">
+                                <span aria-hidden="true">
+                                    <svg viewBox="0 0 16 16">
+                                        <rect x="2.25" y="2.25" width="11.5" height="11.5" rx="1.5" />
+                                        <path d="m4.5 8 2.25 2.25L11.5 5.5" />
+                                    </svg>
+                                </span>
+                                Checklist
+                            </button>
+                        </div>
                         <TaskMembers
                             members={board?.members || []}
                             memberIds={task?.memberIds || []}
@@ -196,9 +211,7 @@ export function TaskDetails() {
                 <aside className="task-details-activity">
                     <div className="task-activity-heading">
                         <h2><span aria-hidden="true">▤</span>Comments and activity</h2>
-                        <button type="button" onClick={() => setAreDetailsVisible(visible => !visible)}>
-                            {areDetailsVisible ? 'Hide details' : 'Show details'}
-                        </button>
+
                     </div>
                     <form className="task-comment-form" onSubmit={onAddComment}>
                         <textarea

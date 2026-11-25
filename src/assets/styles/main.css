@@ -34,10 +34,13 @@
 @import "cmps/board/GroupList.css";
 @import "cmps/board/BoardDetails.css";
 
-@import "cmps/board/TaskDetails.css";
+@import "cmps/board/TaskDetails";
+@import "cmps/board/TaskHeader";
+@import "cmps/board/TaskAddMenu";
 @import "cmps/board/TaskAttributePickers.css";
 @import "cmps/board/TaskMembers.css";
 @import "cmps/board/TaskLabels.css";
+@import "react-datepicker/dist/react-datepicker.css";
 @import "cmps/board/TaskDates.css";
 @import "cmps/board/TaskCheckList.css";
 @import "cmps/board/TaskDescription.css";
