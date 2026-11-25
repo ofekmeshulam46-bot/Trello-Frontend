@@ -17,27 +17,35 @@
 
     & .board-brand {
       display: flex;
-      min-width: 220px;
+      width: 120px;
+      height: 48px;
       align-items: center;
-      gap: 6px;
-      font-size: 15px;
-      font-weight: 700;
+      text-decoration: none;
+      border-radius: 4px;
+      overflow: hidden;
     }
 
-    & .board-brand-mark {
-      display: grid;
-      width: 22px;
-      height: 22px;
-      place-items: center;
-      border-radius: 4px;
-      background: #fff;
-      color: #0c66c2;
+    & .board-brand img {
+      width: 120px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    &.board-page-header .board-brand:hover,
+    &.board-page-header .board-brand:focus-visible {
+      background: rgb(255 255 255 / 20%);
+    }
+
+    &.boards-page-header .board-brand:hover,
+    &.boards-page-header .board-brand:focus-visible {
+      background: var(--board-hover);
     }
 
     & .board-search {
       display: flex;
-      width: min(42vw, 620px);
+      width: min(52vw, 760px);
       height: 30px;
+      margin-inline-start: 570px;
       align-items: center;
       gap: 8px;
       border: 1px solid #ffffff44;
@@ -58,6 +66,29 @@
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
+    }
+
+    &.boards-page-header {
+      border-block-end: 1px solid var(--board-border);
+      background: var(--board-surface);
+      color: var(--board-text);
+
+      & .board-search {
+        border: 1px solid var(--board-border);
+        background: var(--board-hover);
+        color: var(--board-text);
+      }
+
+      & .board-create {
+        background: var(--board-active);
+        color: var(--board-blue);
+      }
+    }
+
+    &.board-page-header {
+      border-block-end: 1px solid #ffffff30;
+      background: #0c66c2;
+      color: #fff;
     }
   }
 

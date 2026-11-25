@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { BoardList } from '../cmps/BoardList.jsx'
+import { BoardEdit } from '../cmps/BoardEdit.jsx'
 import {
     AppSwitcherIcon,
     BoardsIcon,
@@ -24,10 +25,26 @@ export function BoardIndex() {
   const [createBoardToEdit, setCreateBoardToEdit] = useState(null)
   const [starredBoardToEdit, setStarredBoardToEdit] = useState(null)
   const [workspaceBoardToEdit, setWorkspaceBoardToEdit] = useState(null)
+  const [createModalPosition, setCreateModalPosition] = useState(null)
   const starredBoards = boards.filter((board) => board.isStarred === true)
 
   useEffect(() => {
     loadBoards()
+  }, [])
+
+  useEffect(() => {
+    function handleHeaderCreate(ev) {
+      setStarredBoardToEdit(null)
+      setWorkspaceBoardToEdit(null)
+      setCreateModalPosition({
+        left: ev.detail.left,
+        top: ev.detail.top,
+      })
+      setCreateBoardToEdit(boardService.getEmptyBoard())
+    }
+
+    document.addEventListener('trello-open-create-board', handleHeaderCreate)
+    return () => document.removeEventListener('trello-open-create-board', handleHeaderCreate)
   }, [])
 
   async function onRemoveBoard(boardId, boardTitle) {
@@ -43,6 +60,7 @@ export function BoardIndex() {
   function onAddBoard() {
     setStarredBoardToEdit(null)
     setWorkspaceBoardToEdit(null)
+    setCreateModalPosition(null)
     setCreateBoardToEdit(boardService.getEmptyBoard())
   }
 
@@ -67,6 +85,7 @@ export function BoardIndex() {
       setStarredBoardToEdit(null)
       setWorkspaceBoardToEdit(null)
       setCreateBoardToEdit(null)
+      setCreateModalPosition(null)
     } catch (err) {
       console.log("Cannot save board", err)
       showErrorMsg("Cannot save board")
@@ -163,7 +182,9 @@ export function BoardIndex() {
           onEditBoard={onEditBoard}
           onAddBoard={onAddBoard}
           onToggleStar={onToggleStar}
-          boardToEdit={createBoardToEdit || workspaceBoardToEdit}
+          boardToEdit={createBoardToEdit && !createModalPosition
+            ? createBoardToEdit
+            : workspaceBoardToEdit}
           listSource="workspace"
           onSaveBoard={onSaveBoard}
           onCancelEdit={() => {
@@ -172,6 +193,18 @@ export function BoardIndex() {
           }}
         />
       </main>
+      {createBoardToEdit && createModalPosition && (
+        <BoardEdit
+          boardToEdit={createBoardToEdit}
+          onSaveBoard={onSaveBoard}
+          onCancelEdit={() => {
+            setCreateBoardToEdit(null)
+            setCreateModalPosition(null)
+          }}
+          position={createModalPosition}
+          isCreateModal
+        />
+      )}
     </section>
   )
 }

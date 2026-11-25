@@ -16,7 +16,7 @@ const GRADIENT_BACKGROUNDS = [
     'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
 ]
 
-export function BoardEdit({ boardToEdit, onSaveBoard, onCancelEdit, isCreateModal = false }) {
+export function BoardEdit({ boardToEdit, onSaveBoard, onCancelEdit, isCreateModal = false, position = null }) {
     const [boardTitle, setBoardTitle] = useState(boardToEdit.title)
     const [selectedBackground, setSelectedBackground] = useState(
         boardToEdit.style?.backgroundImage || `url("${PHOTO_BACKGROUNDS[0]}")`
@@ -68,7 +68,11 @@ export function BoardEdit({ boardToEdit, onSaveBoard, onCancelEdit, isCreateModa
     }
 
     return (
-        <div className={`board-edit-modal${isCreate ? ' creating' : ' editing'}`} role="presentation" onPointerDown={(ev) => {
+        <div
+            className={`board-edit-modal${isCreate ? ' creating' : ' editing'}${position ? ' positioned' : ''}`}
+            style={position ? { left: position.left, top: position.top } : undefined}
+            role="presentation"
+            onPointerDown={(ev) => {
             if (ev.target === ev.currentTarget) onCancelEdit()
         }}>
             <form className="board-edit-form" onSubmit={onSubmit} noValidate>
@@ -182,4 +186,8 @@ BoardEdit.propTypes = {
     onSaveBoard: PropTypes.func.isRequired,
     onCancelEdit: PropTypes.func.isRequired,
     isCreateModal: PropTypes.bool,
+    position: PropTypes.shape({
+        left: PropTypes.number.isRequired,
+        top: PropTypes.number.isRequired,
+    }),
 }

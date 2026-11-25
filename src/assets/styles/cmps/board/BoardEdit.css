@@ -20,6 +20,17 @@
             width: 304px;
             margin: 0;
         }
+
+        &.positioned {
+            position: fixed;
+            inset: auto;
+            z-index: 10;
+
+            & .board-edit-form {
+                width: 304px;
+                margin: 0;
+            }
+        }
     }
 
     &.editing {
