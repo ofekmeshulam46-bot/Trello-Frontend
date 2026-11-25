@@ -131,6 +131,7 @@ export function GroupList({ groups, labels = [], boardId }) {
                 boardId: PropTypes.string.isRequired,
             }
 
+
         } catch (err) {
             console.error('Failed to move group:', err)
             alert('Could not move list')

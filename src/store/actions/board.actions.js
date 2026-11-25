@@ -199,7 +199,7 @@ export async function addGroup(boardId, groupTitle) {
 
         const updatedBoard = {
             ...board,
-            groups: [...board.groups, group]
+            groups: [...(board.groups || []), group]
         }
         const savedBoard = await boardService.save(updatedBoard)
         store.dispatch(getCmdSetBoard(savedBoard))

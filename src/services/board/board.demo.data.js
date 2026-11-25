@@ -369,4 +369,11 @@ export const demoBoards = [
 		style: {
 			backgroundImage: 'url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=90")',
 		},
+		labels: [],
+		members: [
+			{ _id: 'u102', fullname: 'עומר כהן', imgUrl: 'https://randomuser.me' },
+		],
+		groups: [],
+		activities: [],
+		cmpsOrder: ['MemberPicker', 'StatusPicker', 'DatePicker'],
     }]
