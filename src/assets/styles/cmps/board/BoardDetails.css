@@ -1,10 +1,13 @@
 .main-container.board-page {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    min-width: 0;
     min-height: 100vh;
+    flex-direction: column;
 }
 
 .board-page>main.board-page-main {
+    display: flex;
+    flex: 1 1 auto;
     min-height: 0;
     width: 100%;
 }
@@ -15,7 +18,8 @@
     --card-shadow: 0 1px 1px #091e4240;
 
     display: flex;
-    min-height: 100vh;
+    min-height: calc(100vh - 48px);
+    width: 100%;
     flex-direction: column;
     overflow: hidden;
     background: linear-gradient(135deg, #1687c9 0%, #279bc1 58%, #34b5b4 100%);
