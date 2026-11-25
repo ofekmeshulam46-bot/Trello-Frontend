@@ -15,65 +15,11 @@
     color: var(--board-text);
   }
 
-  & .sidebar-brand {
-    display: grid;
-    grid-template-columns: 26px minmax(0, 1fr) 34px;
-    column-gap: 7px;
-    height: 48px;
-    align-items: center;
-
-    border-block-end: 1px solid var(--board-border);
-    padding-inline: 16px;
-  }
-
-  & .sidebar-switcher {
-    display: grid;
-    width: 34px;
-    height: 34px;
-    place-items: center;
-
-    border: 0;
-    background: transparent;
-    color: var(--board-text);
-    cursor: pointer;
-    justify-self: end;
-  }
-
-  & .sidebar-switcher-icon {
-    width: 18px;
-    height: 18px;
-    fill: currentColor;
-    stroke: none;
-  }
-
-  & .sidebar-app-icon {
-    display: grid;
-    width: 26px;
-    height: 26px;
-    place-items: center;
-
-    color: var(--board-surface);
-  }
-
-  & .sidebar-trello-icon {
-    width: 24px;
-    height: 24px;
-    fill: var(--board-blue);
-    stroke: var(--board-surface);
-    stroke-width: 1.5;
-  }
-
-  & .sidebar-brand-name {
-    color: var(--board-text);
-    font-size: 15px;
-    font-weight: 700;
-  }
-
   & .sidebar-nav {
     display: grid;
     gap: 1px;
 
-    padding: 8px 16px;
+    padding: 24px 16px 16px;
     border-block-end: 1px solid var(--board-border);
   }
 
@@ -114,7 +60,7 @@
   }
 
   & .sidebar-workspaces {
-    padding: 16px;
+    padding: 24px 16px 16px;
 
     & h4 {
       margin: 0 0 8px;

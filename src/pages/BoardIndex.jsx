@@ -4,12 +4,10 @@ import { useSelector } from 'react-redux'
 import { BoardList } from '../cmps/BoardList.jsx'
 import { BoardEdit } from '../cmps/BoardEdit.jsx'
 import {
-    AppSwitcherIcon,
     BoardsIcon,
     ChevronDownIcon,
     HomeIcon,
     StarIcon,
-    TrelloIcon,
 } from '../assets/icons/BoardIndex/board-icons.jsx'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
@@ -112,16 +110,6 @@ export function BoardIndex() {
   return (
     <section className="board-index">
       <aside className="board-sidebar">
-        <div className="sidebar-brand">
-          <span className="sidebar-app-icon" aria-hidden="true">
-            {TrelloIcon}
-          </span>
-          <span className="sidebar-brand-name">Trello</span>
-          <button className="sidebar-switcher" type="button" aria-label="Open app switcher">
-            {AppSwitcherIcon}
-          </button>
-        </div>
-
         <nav className="sidebar-nav" aria-label="Workspace navigation">
           <button className="sidebar-nav-item active" type="button">
             {BoardsIcon}
