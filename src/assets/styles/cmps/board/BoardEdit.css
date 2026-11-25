@@ -212,13 +212,13 @@
         }
 
         & .bg-grid-colors {
-            grid-template-columns: repeat(5, 43px);
+            grid-template-columns: repeat(5, 46px);
             justify-content: start;
         }
 
         & .bg-swatch {
             position: relative;
-            height: 32px;
+            height: 36px;
             border: 0;
             border-radius: 4px;
             background-size: cover;
@@ -227,7 +227,7 @@
         }
 
         & .bg-grid-colors .bg-swatch {
-            height: 28px;
+            height: 32px;
         }
 
         & .bg-swatch.selected::before {
