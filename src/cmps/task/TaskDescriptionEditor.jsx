@@ -39,15 +39,7 @@ export function TaskDescriptionEditor({ description, onSave, onCancel }) {
                 <button className="task-description-save" type="submit" disabled={isSaving}>Save</button>
                 <button className="task-description-cancel" type="button" disabled={isSaving} onClick={onCancelEdit}>Cancel</button>
             </div>
-            <details className="task-description-format-help">
-                <summary>Formatting help</summary>
-                <div>
-                    <strong>Markdown shortcuts</strong>
-                    <p><code>* item</code> creates a list item</p>
-                    <p><code># Heading</code> creates a heading</p>
-                    <p><code>---</code> creates a horizontal rule</p>
-                </div>
-            </details>
+            
         </div>
     </form>
 }
